@@ -1,0 +1,14 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "id" : 1399,
+      "name" : "Game of Thrones",
+      "poster_path" : "/8IuYt2b1d3k0c7a4e5b6f8c9d3f.jpg",
+      "overview" : "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of",
+      "media_type" : "tv"
+    }
+  ],
+  "total_pages": 4,
+  "total_results": 62
+}
