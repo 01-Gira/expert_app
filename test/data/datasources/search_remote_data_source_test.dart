@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:ditonton/data/datasources/search_remote_data_source.dart';
-import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/data/models/media_response.dart';
+import 'package:expert_app/data/datasources/search_remote_data_source.dart';
+import 'package:expert_app/common/exception.dart';
+import 'package:expert_app/data/models/media_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';

@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/data/datasources/search_remote_data_source.dart';
-import 'package:ditonton/domain/entities/media.dart';
-import 'package:ditonton/domain/repositories/search_repository.dart';
+import 'package:expert_app/common/exception.dart';
+import 'package:expert_app/common/failure.dart';
+import 'package:expert_app/data/datasources/search_remote_data_source.dart';
+import 'package:expert_app/domain/entities/media.dart';
+import 'package:expert_app/domain/repositories/search_repository.dart';
 
 class SearchRepositoryImpl implements SearchRepository {
   final SearchRemoteDataSource remoteDataSource;

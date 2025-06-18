@@ -1,4 +1,4 @@
-import 'package:ditonton/domain/entities/media.dart';
+import 'package:expert_app/domain/entities/media.dart';
 import 'package:equatable/equatable.dart';
 
 class MediaModel extends Equatable {

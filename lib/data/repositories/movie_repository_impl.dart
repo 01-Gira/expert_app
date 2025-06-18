@@ -1,19 +1,17 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/entities/movie_detail.dart';
-import 'package:ditonton/domain/repositories/movie_repository.dart';
-import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/common/failure.dart';
+import 'package:expert_app/data/datasources/movie_remote_data_source.dart';
+import 'package:expert_app/domain/entities/movie.dart';
+import 'package:expert_app/domain/entities/movie_detail.dart';
+import 'package:expert_app/domain/repositories/movie_repository.dart';
+import 'package:expert_app/common/exception.dart';
+import 'package:expert_app/common/failure.dart';
 
 class MovieRepositoryImpl implements MovieRepository {
   final MovieRemoteDataSource remoteDataSource;
 
-  MovieRepositoryImpl({
-    required this.remoteDataSource,
-  });
+  MovieRepositoryImpl({required this.remoteDataSource});
 
   @override
   Future<Either<Failure, List<Movie>>> getNowPlayingMovies() async {

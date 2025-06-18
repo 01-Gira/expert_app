@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/domain/entities/tv.dart';
-import 'package:ditonton/domain/usecases/get_on_the_air_tvs.dart';
+import 'package:expert_app/domain/entities/tv.dart';
+import 'package:expert_app/domain/usecases/get_on_the_air_tvs.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -19,8 +19,9 @@ void main() {
 
   test('should get list on the air tv from the repository', () async {
     // arrange
-    when(mockTvRepository.getOnTheAirTvs())
-        .thenAnswer((_) async => Right(tTvs));
+    when(
+      mockTvRepository.getOnTheAirTvs(),
+    ).thenAnswer((_) async => Right(tTvs));
     // act
     final result = await usecase.execute();
     // assert

@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/domain/entities/media.dart';
-import 'package:ditonton/presentation/pages/movie_detail_page.dart';
-import 'package:ditonton/presentation/pages/tv_detail_page.dart';
+import 'package:expert_app/common/constants.dart';
+import 'package:expert_app/domain/entities/media.dart';
+import 'package:expert_app/presentation/pages/movie_detail_page.dart';
+import 'package:expert_app/presentation/pages/tv_detail_page.dart';
 import 'package:flutter/material.dart';
 
 class MediaCard extends StatelessWidget {

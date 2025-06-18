@@ -1,4 +1,4 @@
-import 'package:ditonton/domain/entities/season.dart';
+import 'package:expert_app/domain/entities/season.dart';
 import 'package:equatable/equatable.dart';
 
 class SeasonModel extends Equatable {

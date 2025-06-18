@@ -1,8 +1,8 @@
-import 'package:ditonton/domain/entities/tv.dart';
-import 'package:ditonton/domain/usecases/get_on_the_air_tvs.dart';
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/usecases/get_popular_tvs.dart';
-import 'package:ditonton/domain/usecases/get_top_rated_tvs.dart';
+import 'package:expert_app/domain/entities/tv.dart';
+import 'package:expert_app/domain/usecases/get_on_the_air_tvs.dart';
+import 'package:expert_app/common/state_enum.dart';
+import 'package:expert_app/domain/usecases/get_popular_tvs.dart';
+import 'package:expert_app/domain/usecases/get_top_rated_tvs.dart';
 import 'package:flutter/material.dart';
 
 class TvListNotifier extends ChangeNotifier {

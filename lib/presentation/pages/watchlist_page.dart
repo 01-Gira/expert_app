@@ -1,7 +1,7 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/presentation/provider/watchlist_notifier.dart';
-import 'package:ditonton/presentation/widgets/media_card_list.dart';
+import 'package:expert_app/common/state_enum.dart';
+import 'package:expert_app/common/utils.dart';
+import 'package:expert_app/presentation/provider/watchlist_notifier.dart';
+import 'package:expert_app/presentation/widgets/media_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,9 +16,12 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<WatchlistNotifier>(context, listen: false)
-            .fetchWatchlistItems());
+    Future.microtask(
+      () => Provider.of<WatchlistNotifier>(
+        context,
+        listen: false,
+      ).fetchWatchlistItems(),
+    );
   }
 
   @override
@@ -28,24 +31,22 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
   }
 
   void didPopNext() {
-    Provider.of<WatchlistNotifier>(context, listen: false)
-        .fetchWatchlistItems();
+    Provider.of<WatchlistNotifier>(
+      context,
+      listen: false,
+    ).fetchWatchlistItems();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Watchlist'),
-      ),
+      appBar: AppBar(title: Text('Watchlist')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<WatchlistNotifier>(
           builder: (context, data, child) {
             if (data.watchlistState == RequestState.Loading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return Center(child: CircularProgressIndicator());
             } else if (data.watchlistState == RequestState.Loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {

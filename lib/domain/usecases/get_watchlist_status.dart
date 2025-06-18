@@ -1,4 +1,4 @@
-import 'package:ditonton/domain/repositories/watchlist_repository.dart';
+import 'package:expert_app/domain/repositories/watchlist_repository.dart';
 
 class GetWatchlistStatus {
   final WatchlistRepository repository;

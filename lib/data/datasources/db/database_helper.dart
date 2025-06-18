@@ -20,7 +20,7 @@ class DatabaseHelper {
 
   Future<Database> _initDb() async {
     final path = await getDatabasesPath();
-    final databasePath = '$path/ditonton.db';
+    final databasePath = '$path/expert_app.db';
 
     var db = await openDatabase(
       databasePath,

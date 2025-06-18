@@ -1,8 +1,8 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/media.dart';
-import 'package:ditonton/presentation/pages/search_page.dart';
-import 'package:ditonton/presentation/provider/search_notifier.dart';
-import 'package:ditonton/presentation/widgets/media_card_list.dart';
+import 'package:expert_app/common/state_enum.dart';
+import 'package:expert_app/domain/entities/media.dart';
+import 'package:expert_app/presentation/pages/search_page.dart';
+import 'package:expert_app/presentation/provider/search_notifier.dart';
+import 'package:expert_app/presentation/widgets/media_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';

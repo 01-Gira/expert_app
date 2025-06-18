@@ -1,9 +1,9 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/media.dart';
-import 'package:ditonton/domain/usecases/get_watchlist_items.dart';
-import 'package:ditonton/domain/usecases/get_watchlist_status.dart';
-import 'package:ditonton/domain/usecases/remove_watchlist.dart';
-import 'package:ditonton/domain/usecases/save_watchlist.dart';
+import 'package:expert_app/common/state_enum.dart';
+import 'package:expert_app/domain/entities/media.dart';
+import 'package:expert_app/domain/usecases/get_watchlist_items.dart';
+import 'package:expert_app/domain/usecases/get_watchlist_status.dart';
+import 'package:expert_app/domain/usecases/remove_watchlist.dart';
+import 'package:expert_app/domain/usecases/save_watchlist.dart';
 import 'package:flutter/foundation.dart';
 
 class WatchlistNotifier extends ChangeNotifier {

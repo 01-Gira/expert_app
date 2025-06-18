@@ -1,6 +1,6 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/media.dart';
-import 'package:ditonton/domain/usecases/search_multi.dart';
+import 'package:expert_app/common/state_enum.dart';
+import 'package:expert_app/domain/entities/media.dart';
+import 'package:expert_app/domain/usecases/search_multi.dart';
 import 'package:flutter/foundation.dart';
 
 class SearchNotifier extends ChangeNotifier {

@@ -1,7 +1,7 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/tv.dart';
-import 'package:ditonton/presentation/pages/popular_tvs_page.dart';
-import 'package:ditonton/presentation/provider/popular_tvs_notifier.dart';
+import 'package:expert_app/common/state_enum.dart';
+import 'package:expert_app/domain/entities/tv.dart';
+import 'package:expert_app/presentation/pages/popular_tvs_page.dart';
+import 'package:expert_app/presentation/provider/popular_tvs_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -18,14 +18,13 @@ void main() {
   Widget _makeTestableWidget(Widget body) {
     return ChangeNotifierProvider<PopularTvsNotifier>.value(
       value: mockNotifier,
-      child: MaterialApp(
-        home: body,
-      ),
+      child: MaterialApp(home: body),
     );
   }
 
-  testWidgets('Page should display center progress bar when loading',
-      (WidgetTester tester) async {
+  testWidgets('Page should display center progress bar when loading', (
+    WidgetTester tester,
+  ) async {
     when(mockNotifier.state).thenReturn(RequestState.Loading);
 
     final progressBarFinder = find.byType(CircularProgressIndicator);
@@ -37,8 +36,9 @@ void main() {
     expect(progressBarFinder, findsOneWidget);
   });
 
-  testWidgets('Page should display ListView when data is loaded',
-      (WidgetTester tester) async {
+  testWidgets('Page should display ListView when data is loaded', (
+    WidgetTester tester,
+  ) async {
     when(mockNotifier.state).thenReturn(RequestState.Loaded);
     when(mockNotifier.tvs).thenReturn(<Tv>[]);
 
@@ -49,8 +49,9 @@ void main() {
     expect(listViewFinder, findsOneWidget);
   });
 
-  testWidgets('Page should display text with message when Error',
-      (WidgetTester tester) async {
+  testWidgets('Page should display text with message when Error', (
+    WidgetTester tester,
+  ) async {
     when(mockNotifier.state).thenReturn(RequestState.Error);
     when(mockNotifier.message).thenReturn('Error message');
 

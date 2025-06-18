@@ -1,19 +1,17 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/data/datasources/tv_remote_data_source.dart';
-import 'package:ditonton/domain/entities/tv.dart';
-import 'package:ditonton/domain/entities/tv_detail.dart';
-import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/domain/repositories/tv_repository.dart';
+import 'package:expert_app/data/datasources/tv_remote_data_source.dart';
+import 'package:expert_app/domain/entities/tv.dart';
+import 'package:expert_app/domain/entities/tv_detail.dart';
+import 'package:expert_app/common/exception.dart';
+import 'package:expert_app/common/failure.dart';
+import 'package:expert_app/domain/repositories/tv_repository.dart';
 
 class TvRepositoryImpl implements TvRepository {
   final TvRemoteDataSource remoteDataSource;
 
-  TvRepositoryImpl({
-    required this.remoteDataSource,
-  });
+  TvRepositoryImpl({required this.remoteDataSource});
 
   @override
   Future<Either<Failure, List<Tv>>> getOnTheAirTvs() async {

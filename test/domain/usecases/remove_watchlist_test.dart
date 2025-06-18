@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/domain/usecases/remove_watchlist.dart';
+import 'package:expert_app/domain/usecases/remove_watchlist.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -16,8 +16,9 @@ void main() {
 
   test('should remove watchlist movie from repository', () async {
     // arrange
-    when(mockMovieRepository.removeWatchlist(1, 'tv'))
-        .thenAnswer((_) async => Right('Removed from watchlist'));
+    when(
+      mockMovieRepository.removeWatchlist(1, 'tv'),
+    ).thenAnswer((_) async => Right('Removed from watchlist'));
     // act
     final result = await usecase.execute(1, 'tv');
     // assert

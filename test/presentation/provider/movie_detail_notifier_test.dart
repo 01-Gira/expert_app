@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/common/state_enum.dart';
+import 'package:expert_app/domain/entities/movie.dart';
+import 'package:expert_app/common/failure.dart';
+import 'package:expert_app/presentation/provider/movie_detail_notifier.dart';
+import 'package:expert_app/common/state_enum.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -19,12 +19,13 @@ void main() {
     listenerCallCount = 0;
     mockGetMovieDetail = MockGetMovieDetail();
     mockGetMovieRecommendations = MockGetMovieRecommendations();
-    provider = MovieDetailNotifier(
-      getMovieDetail: mockGetMovieDetail,
-      getMovieRecommendations: mockGetMovieRecommendations,
-    )..addListener(() {
-        listenerCallCount += 1;
-      });
+    provider =
+        MovieDetailNotifier(
+          getMovieDetail: mockGetMovieDetail,
+          getMovieRecommendations: mockGetMovieRecommendations,
+        )..addListener(() {
+          listenerCallCount += 1;
+        });
   });
 
   final tId = 1;
@@ -47,10 +48,12 @@ void main() {
   final tMovies = <Movie>[tMovie];
 
   void _arrangeUsecase() {
-    when(mockGetMovieDetail.execute(tId))
-        .thenAnswer((_) async => Right(testMovieDetail));
-    when(mockGetMovieRecommendations.execute(tId))
-        .thenAnswer((_) async => Right(tMovies));
+    when(
+      mockGetMovieDetail.execute(tId),
+    ).thenAnswer((_) async => Right(testMovieDetail));
+    when(
+      mockGetMovieRecommendations.execute(tId),
+    ).thenAnswer((_) async => Right(tMovies));
   }
 
   group('Get Movie Detail', () {
@@ -85,16 +88,18 @@ void main() {
       expect(listenerCallCount, 3);
     });
 
-    test('should change recommendation movies when data is gotten successfully',
-        () async {
-      // arrange
-      _arrangeUsecase();
-      // act
-      await provider.fetchMovieDetail(tId);
-      // assert
-      expect(provider.movieState, RequestState.Loaded);
-      expect(provider.movieRecommendations, tMovies);
-    });
+    test(
+      'should change recommendation movies when data is gotten successfully',
+      () async {
+        // arrange
+        _arrangeUsecase();
+        // act
+        await provider.fetchMovieDetail(tId);
+        // assert
+        expect(provider.movieState, RequestState.Loaded);
+        expect(provider.movieRecommendations, tMovies);
+      },
+    );
   });
 
   group('Get Movie Recommendations', () {
@@ -108,23 +113,27 @@ void main() {
       expect(provider.movieRecommendations, tMovies);
     });
 
-    test('should update recommendation state when data is gotten successfully',
-        () async {
-      // arrange
-      _arrangeUsecase();
-      // act
-      await provider.fetchMovieDetail(tId);
-      // assert
-      expect(provider.recommendationState, RequestState.Loaded);
-      expect(provider.movieRecommendations, tMovies);
-    });
+    test(
+      'should update recommendation state when data is gotten successfully',
+      () async {
+        // arrange
+        _arrangeUsecase();
+        // act
+        await provider.fetchMovieDetail(tId);
+        // assert
+        expect(provider.recommendationState, RequestState.Loaded);
+        expect(provider.movieRecommendations, tMovies);
+      },
+    );
 
     test('should update error message when request in successful', () async {
       // arrange
-      when(mockGetMovieDetail.execute(tId))
-          .thenAnswer((_) async => Right(testMovieDetail));
-      when(mockGetMovieRecommendations.execute(tId))
-          .thenAnswer((_) async => Left(ServerFailure('Failed')));
+      when(
+        mockGetMovieDetail.execute(tId),
+      ).thenAnswer((_) async => Right(testMovieDetail));
+      when(
+        mockGetMovieRecommendations.execute(tId),
+      ).thenAnswer((_) async => Left(ServerFailure('Failed')));
       // act
       await provider.fetchMovieDetail(tId);
       // assert
@@ -136,10 +145,12 @@ void main() {
   group('on Error', () {
     test('should return error when data is unsuccessful', () async {
       // arrange
-      when(mockGetMovieDetail.execute(tId))
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
-      when(mockGetMovieRecommendations.execute(tId))
-          .thenAnswer((_) async => Right(tMovies));
+      when(
+        mockGetMovieDetail.execute(tId),
+      ).thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+      when(
+        mockGetMovieRecommendations.execute(tId),
+      ).thenAnswer((_) async => Right(tMovies));
       // act
       await provider.fetchMovieDetail(tId);
       // assert

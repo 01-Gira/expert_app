@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/data/models/media_model.dart';
-import 'package:ditonton/data/repositories/search_repository_impl.dart';
+import 'package:expert_app/common/exception.dart';
+import 'package:expert_app/common/failure.dart';
+import 'package:expert_app/data/models/media_model.dart';
+import 'package:expert_app/data/repositories/search_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -16,9 +16,7 @@ void main() {
 
   setUp(() {
     mockRemoteDataSource = MockSearchRemoteDataSource();
-    repository = SearchRepositoryImpl(
-      remoteDataSource: mockRemoteDataSource,
-    );
+    repository = SearchRepositoryImpl(remoteDataSource: mockRemoteDataSource);
   });
 
   group('Search Multi', () {
@@ -32,43 +30,54 @@ void main() {
         mediaType: 'movie',
       ),
     ];
-    final tMediaList =
-        tMediaModelList.map((model) => model.toEntity()).toList();
-
-    test('should return media list when call to data source is successful',
-        () async {
-      // arrange
-      when(mockRemoteDataSource.searchMulti(tQuery))
-          .thenAnswer((_) async => tMediaModelList);
-      // act
-      final result = await repository.searchMulti(tQuery);
-      // assert
-      final resultList = result.getOrElse(() => []);
-      expect(resultList, tMediaList);
-    });
-
-    test('should return ServerFailure when call to data source is unsuccessful',
-        () async {
-      // arrange
-      when(mockRemoteDataSource.searchMulti(tQuery))
-          .thenThrow(ServerException());
-      // act
-      final result = await repository.searchMulti(tQuery);
-      // assert
-      expect(result, Left(ServerFailure('')));
-    });
+    final tMediaList = tMediaModelList
+        .map((model) => model.toEntity())
+        .toList();
 
     test(
-        'should return ConnectionFailure when device is not connected to the internet',
-        () async {
-      // arrange
-      when(mockRemoteDataSource.searchMulti(tQuery))
-          .thenThrow(SocketException('Failed to connect to the network'));
-      // act
-      final result = await repository.searchMulti(tQuery);
-      // assert
-      expect(
-          result, Left(ConnectionFailure('Failed to connect to the network')));
-    });
+      'should return media list when call to data source is successful',
+      () async {
+        // arrange
+        when(
+          mockRemoteDataSource.searchMulti(tQuery),
+        ).thenAnswer((_) async => tMediaModelList);
+        // act
+        final result = await repository.searchMulti(tQuery);
+        // assert
+        final resultList = result.getOrElse(() => []);
+        expect(resultList, tMediaList);
+      },
+    );
+
+    test(
+      'should return ServerFailure when call to data source is unsuccessful',
+      () async {
+        // arrange
+        when(
+          mockRemoteDataSource.searchMulti(tQuery),
+        ).thenThrow(ServerException());
+        // act
+        final result = await repository.searchMulti(tQuery);
+        // assert
+        expect(result, Left(ServerFailure('')));
+      },
+    );
+
+    test(
+      'should return ConnectionFailure when device is not connected to the internet',
+      () async {
+        // arrange
+        when(
+          mockRemoteDataSource.searchMulti(tQuery),
+        ).thenThrow(SocketException('Failed to connect to the network'));
+        // act
+        final result = await repository.searchMulti(tQuery);
+        // assert
+        expect(
+          result,
+          Left(ConnectionFailure('Failed to connect to the network')),
+        );
+      },
+    );
   });
 }

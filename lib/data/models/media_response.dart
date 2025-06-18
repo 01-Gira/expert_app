@@ -1,4 +1,4 @@
-import 'package:ditonton/data/models/media_model.dart';
+import 'package:expert_app/data/models/media_model.dart';
 import 'package:equatable/equatable.dart';
 
 class MediaResponse extends Equatable {

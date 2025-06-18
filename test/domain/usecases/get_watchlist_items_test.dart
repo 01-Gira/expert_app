@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/domain/usecases/get_watchlist_items.dart';
+import 'package:expert_app/domain/usecases/get_watchlist_items.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -17,8 +17,9 @@ void main() {
 
   test('should get list of watchlist from the repository', () async {
     // arrange
-    when(mockWatchlistRepository.getWatchlist())
-        .thenAnswer((_) async => Right(testWatchlistItems));
+    when(
+      mockWatchlistRepository.getWatchlist(),
+    ).thenAnswer((_) async => Right(testWatchlistItems));
     // act
     final result = await usecase.execute();
     // assert

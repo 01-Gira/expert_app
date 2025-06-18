@@ -1,8 +1,8 @@
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/entities/movie_detail.dart';
-import 'package:ditonton/domain/usecases/get_movie_detail.dart';
-import 'package:ditonton/domain/usecases/get_movie_recommendations.dart';
-import 'package:ditonton/common/state_enum.dart';
+import 'package:expert_app/domain/entities/movie.dart';
+import 'package:expert_app/domain/entities/movie_detail.dart';
+import 'package:expert_app/domain/usecases/get_movie_detail.dart';
+import 'package:expert_app/domain/usecases/get_movie_recommendations.dart';
+import 'package:expert_app/common/state_enum.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

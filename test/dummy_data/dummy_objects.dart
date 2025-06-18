@@ -1,11 +1,11 @@
-import 'package:ditonton/data/models/watchlist_table.dart';
-import 'package:ditonton/domain/entities/genre.dart';
-import 'package:ditonton/domain/entities/media.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/entities/movie_detail.dart';
-import 'package:ditonton/domain/entities/season.dart';
-import 'package:ditonton/domain/entities/tv.dart';
-import 'package:ditonton/domain/entities/tv_detail.dart';
+import 'package:expert_app/data/models/watchlist_table.dart';
+import 'package:expert_app/domain/entities/genre.dart';
+import 'package:expert_app/domain/entities/media.dart';
+import 'package:expert_app/domain/entities/movie.dart';
+import 'package:expert_app/domain/entities/movie_detail.dart';
+import 'package:expert_app/domain/entities/season.dart';
+import 'package:expert_app/domain/entities/tv.dart';
+import 'package:expert_app/domain/entities/tv_detail.dart';
 
 // === MOVIE DUMMIES ===
 

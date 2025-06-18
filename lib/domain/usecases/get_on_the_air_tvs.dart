@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import 'package:ditonton/domain/entities/tv.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/domain/repositories/tv_repository.dart';
+import 'package:expert_app/domain/entities/tv.dart';
+import 'package:expert_app/common/failure.dart';
+import 'package:expert_app/domain/repositories/tv_repository.dart';
 
 class GetOnTheAirTvs {
   final TvRepository repository;

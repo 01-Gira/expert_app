@@ -1,5 +1,5 @@
-import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/data/datasources/watchlist_local_data_source.dart';
+import 'package:expert_app/common/exception.dart';
+import 'package:expert_app/data/datasources/watchlist_local_data_source.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -12,60 +12,81 @@ void main() {
 
   setUp(() {
     mockDatabaseHelper = MockDatabaseHelper();
-    dataSource =
-        WatchlistLocalDataSourceImpl(databaseHelper: mockDatabaseHelper);
+    dataSource = WatchlistLocalDataSourceImpl(
+      databaseHelper: mockDatabaseHelper,
+    );
   });
 
   group('save watchlist', () {
-    test('should return success message when insert to database is success',
-        () async {
-      // arrange
-      when(mockDatabaseHelper.insertWatchlist(testWatchlistTable.toJson()))
-          .thenAnswer((_) async => 1);
-      // act
-      final result = await dataSource.insertWatchlist(testWatchlistTable);
-      // assert
-      expect(result, 'Added to Watchlist');
-    });
+    test(
+      'should return success message when insert to database is success',
+      () async {
+        // arrange
+        when(
+          mockDatabaseHelper.insertWatchlist(testWatchlistTable.toJson()),
+        ).thenAnswer((_) async => 1);
+        // act
+        final result = await dataSource.insertWatchlist(testWatchlistTable);
+        // assert
+        expect(result, 'Added to Watchlist');
+      },
+    );
 
-    test('should throw DatabaseException when insert to database is failed',
-        () async {
-      // arrange
-      when(mockDatabaseHelper.insertWatchlist(testWatchlistTable.toJson()))
-          .thenThrow(Exception());
-      // act
-      final call = dataSource.insertWatchlist(testWatchlistTable);
-      // assert
-      expect(() => call, throwsA(isA<DatabaseException>()));
-    });
+    test(
+      'should throw DatabaseException when insert to database is failed',
+      () async {
+        // arrange
+        when(
+          mockDatabaseHelper.insertWatchlist(testWatchlistTable.toJson()),
+        ).thenThrow(Exception());
+        // act
+        final call = dataSource.insertWatchlist(testWatchlistTable);
+        // assert
+        expect(() => call, throwsA(isA<DatabaseException>()));
+      },
+    );
   });
 
   group('remove watchlist', () {
-    test('should return success message when remove from database is success',
-        () async {
-      // arrange
-      when(mockDatabaseHelper.removeWatchlist(
-              testWatchlistTable.id, testWatchlistTable.mediaType))
-          .thenAnswer((_) async => 1);
-      // act
-      final result = await dataSource.removeWatchlist(
-          testWatchlistTable.id, testWatchlistTable.mediaType);
-      // assert
-      expect(result, 'Removed from Watchlist');
-    });
+    test(
+      'should return success message when remove from database is success',
+      () async {
+        // arrange
+        when(
+          mockDatabaseHelper.removeWatchlist(
+            testWatchlistTable.id,
+            testWatchlistTable.mediaType,
+          ),
+        ).thenAnswer((_) async => 1);
+        // act
+        final result = await dataSource.removeWatchlist(
+          testWatchlistTable.id,
+          testWatchlistTable.mediaType,
+        );
+        // assert
+        expect(result, 'Removed from Watchlist');
+      },
+    );
 
-    test('should throw DatabaseException when remove from database is failed',
-        () async {
-      // arrange
-      when(mockDatabaseHelper.removeWatchlist(
-              testWatchlistTable.id, testWatchlistTable.mediaType))
-          .thenThrow(Exception());
-      // act
-      final call = dataSource.removeWatchlist(
-          testWatchlistTable.id, testWatchlistTable.mediaType);
-      // assert
-      expect(() => call, throwsA(isA<DatabaseException>()));
-    });
+    test(
+      'should throw DatabaseException when remove from database is failed',
+      () async {
+        // arrange
+        when(
+          mockDatabaseHelper.removeWatchlist(
+            testWatchlistTable.id,
+            testWatchlistTable.mediaType,
+          ),
+        ).thenThrow(Exception());
+        // act
+        final call = dataSource.removeWatchlist(
+          testWatchlistTable.id,
+          testWatchlistTable.mediaType,
+        );
+        // assert
+        expect(() => call, throwsA(isA<DatabaseException>()));
+      },
+    );
   });
 
   group('Get Watchlist by Id', () {
@@ -74,8 +95,9 @@ void main() {
 
     test('should return WatchlistTable when data is found', () async {
       // arrange
-      when(mockDatabaseHelper.getItemById(tId, tMediaType))
-          .thenAnswer((_) async => testWatchlistMap);
+      when(
+        mockDatabaseHelper.getItemById(tId, tMediaType),
+      ).thenAnswer((_) async => testWatchlistMap);
       // act
       final result = await dataSource.getItemById(tId, tMediaType);
       // assert
@@ -84,8 +106,9 @@ void main() {
 
     test('should return null when data is not found', () async {
       // arrange
-      when(mockDatabaseHelper.getItemById(tId, tMediaType))
-          .thenAnswer((_) async => null);
+      when(
+        mockDatabaseHelper.getItemById(tId, tMediaType),
+      ).thenAnswer((_) async => null);
       // act
       final result = await dataSource.getItemById(tId, tMediaType);
       // assert
@@ -96,8 +119,9 @@ void main() {
   group('get watchlist items', () {
     test('should return list of WatchlistTable from database', () async {
       // arrange
-      when(mockDatabaseHelper.getWatchlist())
-          .thenAnswer((_) async => [testWatchlistMap]);
+      when(
+        mockDatabaseHelper.getWatchlist(),
+      ).thenAnswer((_) async => [testWatchlistMap]);
       // act
       final result = await dataSource.getWatchlist();
       // assert

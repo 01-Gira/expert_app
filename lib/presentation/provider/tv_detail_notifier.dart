@@ -1,8 +1,8 @@
-import 'package:ditonton/domain/entities/tv.dart';
-import 'package:ditonton/domain/entities/tv_detail.dart';
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/usecases/get_tv_detail.dart';
-import 'package:ditonton/domain/usecases/get_tv_recommendations.dart';
+import 'package:expert_app/domain/entities/tv.dart';
+import 'package:expert_app/domain/entities/tv_detail.dart';
+import 'package:expert_app/common/state_enum.dart';
+import 'package:expert_app/domain/usecases/get_tv_detail.dart';
+import 'package:expert_app/domain/usecases/get_tv_recommendations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

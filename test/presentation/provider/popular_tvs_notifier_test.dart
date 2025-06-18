@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/tv.dart';
-import 'package:ditonton/presentation/provider/popular_tvs_notifier.dart';
+import 'package:expert_app/common/failure.dart';
+import 'package:expert_app/common/state_enum.dart';
+import 'package:expert_app/domain/entities/tv.dart';
+import 'package:expert_app/presentation/provider/popular_tvs_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -62,8 +62,9 @@ void main() {
 
   test('should return error when data is unsuccessful', () async {
     // arrange
-    when(mockGetPopularTvs.execute())
-        .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+    when(
+      mockGetPopularTvs.execute(),
+    ).thenAnswer((_) async => Left(ServerFailure('Server Failure')));
     // act
     await notifier.fetchPopularTvs();
     // assert

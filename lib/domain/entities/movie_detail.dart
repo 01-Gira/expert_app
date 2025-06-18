@@ -1,5 +1,5 @@
-import 'package:ditonton/domain/entities/genre.dart';
-import 'package:ditonton/domain/entities/media.dart';
+import 'package:expert_app/domain/entities/genre.dart';
+import 'package:expert_app/domain/entities/media.dart';
 import 'package:equatable/equatable.dart';
 
 class MovieDetail extends Equatable {
