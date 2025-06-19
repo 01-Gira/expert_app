@@ -1,0 +1,55 @@
+workflows:
+  flutter-workflow:
+    name: Flutter Workflow
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: '*'
+          include: true
+          source: true
+    max_build_duration: 120
+    environment:
+      flutter: stable
+      groups:
+        - codecov_credentials
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter packages pub get
+      - name: Install pods
+        script: |
+          find . -name "Podfile" -execdir pod install \;
+      - name: Flutter analyze
+        script: |
+          flutter analyze
+      - name: Run unit test and code coverage
+        script: |
+          chmod +x ./test.sh && ./test.sh
+
+          HOMEBREW_NO_AUTO_UPDATE=1 brew install lcov 
+          
+          CODE_COVERAGE_TARGET=70
+          code_coverage=$(lcov --list $CM_BUILD_DIR/coverage/lcov.info | sed -n "s/.*Total:|\(.*\)%.*/\1/p")
+          
+          echo "Code Coverage: ${code_coverage}% "
+          if (( $(echo "$code_coverage < $CODE_COVERAGE_TARGET" | bc) ))
+            then { echo "code coverage is less than expected" && exit 1; }
+          fi  
+    
+        test_report: ./flutter_coverage.json
+      - name: Codecov upload
+        script: | 
+          curl -Os https://uploader.codecov.io/latest/macos/codecov
+          chmod +x codecov
+          ./codecov -t ${CODECOV_TOKEN}
+    artifacts:
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - giramnk@gmail.com
+        notify:
+          success: true
+          failure: true

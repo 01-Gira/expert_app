@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/common/constants.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:movie/domain/entities/movie.dart';
 import 'package:tv/domain/entities/tv.dart';
 import 'package:expert_app/presentation/pages/about_page.dart';
@@ -176,7 +175,6 @@ class MovieTabPage extends StatelessWidget {
   }
 }
 
-// Widget untuk konten tab TV Shows
 class TvTabPage extends StatelessWidget {
   const TvTabPage({super.key});
 
