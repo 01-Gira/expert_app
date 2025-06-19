@@ -16,7 +16,13 @@ workflows:
     scripts:
       - name: Get Flutter packages
         script: |
-          flutter packages pub get
+          flutter pub get
+          for d in packages/*; do
+            if [ -d "$d" ]; then
+              echo "Getting dependencies for $d..."
+              (cd "$d" && flutter pub get)
+            fi
+          done
       - name: Install pods
         script: |
           find . -name "Podfile" -execdir pod install \;
