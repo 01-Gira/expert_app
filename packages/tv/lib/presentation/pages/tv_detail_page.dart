@@ -11,28 +11,30 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class TvDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/tv-detail';
+  static const routeName = '/tv-detail';
 
   final int id;
   const TvDetailPage({super.key, required this.id});
 
   @override
-  _TvDetailPageState createState() => _TvDetailPageState();
+  TvDetailPageState createState() => TvDetailPageState();
 }
 
-class _TvDetailPageState extends State<TvDetailPage> {
+class TvDetailPageState extends State<TvDetailPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<TvDetailNotifier>(
-        context,
-        listen: false,
-      ).fetchTvDetail(widget.id);
-      Provider.of<WatchlistNotifier>(
-        context,
-        listen: false,
-      ).loadWatchlistStatus(widget.id, 'tv');
+      if (mounted) {
+        Provider.of<TvDetailNotifier>(
+          context,
+          listen: false,
+        ).fetchTvDetail(widget.id);
+        Provider.of<WatchlistNotifier>(
+          context,
+          listen: false,
+        ).loadWatchlistStatus(widget.id, 'tv');
+      }
     });
   }
 
@@ -41,9 +43,9 @@ class _TvDetailPageState extends State<TvDetailPage> {
     return Scaffold(
       body: Consumer<TvDetailNotifier>(
         builder: (context, movieDetailProvider, child) {
-          if (movieDetailProvider.tvState == RequestState.Loading) {
+          if (movieDetailProvider.tvState == RequestState.loading) {
             return Center(child: CircularProgressIndicator());
-          } else if (movieDetailProvider.tvState == RequestState.Loaded) {
+          } else if (movieDetailProvider.tvState == RequestState.loaded) {
             final tv = movieDetailProvider.tv;
             return Consumer<WatchlistNotifier>(
               builder: (context, watchlistNotifier, child) {
@@ -112,42 +114,50 @@ class DetailContent extends StatelessWidget {
                             Text(tv.name, style: kHeading5),
                             FilledButton(
                               onPressed: () async {
+                                final watchlistNotifier =
+                                    Provider.of<WatchlistNotifier>(
+                                      context,
+                                      listen: false,
+                                    );
+                                final scaffoldMessenger = ScaffoldMessenger.of(
+                                  context,
+                                );
+
                                 if (!isAddedWatchlist) {
                                   final mediaItem = tv.toMedia();
-                                  await Provider.of<WatchlistNotifier>(
-                                    context,
-                                    listen: false,
-                                  ).addWatchlist(mediaItem);
+                                  await watchlistNotifier.addWatchlist(
+                                    mediaItem,
+                                  );
                                 } else {
-                                  await Provider.of<WatchlistNotifier>(
-                                    context,
-                                    listen: false,
-                                  ).removeFromWatchlist(tv.id, 'tv');
+                                  await watchlistNotifier.removeFromWatchlist(
+                                    tv.id,
+                                    'tv',
+                                  );
                                 }
 
-                                final message = Provider.of<WatchlistNotifier>(
-                                  context,
-                                  listen: false,
-                                ).watchlistMessage;
+                                final message =
+                                    watchlistNotifier.watchlistMessage;
 
-                                if (message ==
-                                        WatchlistNotifier
-                                            .watchlistAddSuccessMessage ||
-                                    message ==
-                                        WatchlistNotifier
-                                            .watchlistRemoveSuccessMessage) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(message)),
-                                  );
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        content: Text(message),
-                                      );
-                                    },
-                                  );
+                                if (context.mounted) {
+                                  if (message ==
+                                          WatchlistNotifier
+                                              .watchlistAddSuccessMessage ||
+                                      message ==
+                                          WatchlistNotifier
+                                              .watchlistRemoveSuccessMessage) {
+                                    scaffoldMessenger.showSnackBar(
+                                      SnackBar(content: Text(message)),
+                                    );
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text(message),
+                                        );
+                                      },
+                                    );
+                                  }
                                 }
                               },
                               child: Row(
@@ -253,15 +263,15 @@ class DetailContent extends StatelessWidget {
                             Consumer<TvDetailNotifier>(
                               builder: (context, data, child) {
                                 if (data.recommendationState ==
-                                    RequestState.Loading) {
+                                    RequestState.loading) {
                                   return Center(
                                     child: CircularProgressIndicator(),
                                   );
                                 } else if (data.recommendationState ==
-                                    RequestState.Error) {
+                                    RequestState.error) {
                                   return Text(data.message);
                                 } else if (data.recommendationState ==
-                                    RequestState.Loaded) {
+                                    RequestState.loaded) {
                                   return SizedBox(
                                     height: 150,
                                     child: ListView.builder(
@@ -274,7 +284,7 @@ class DetailContent extends StatelessWidget {
                                             onTap: () {
                                               Navigator.pushReplacementNamed(
                                                 context,
-                                                TvDetailPage.ROUTE_NAME,
+                                                TvDetailPage.routeName,
                                                 arguments: tv.id,
                                               );
                                             },

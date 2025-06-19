@@ -5,24 +5,27 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PopularTvsPage extends StatefulWidget {
-  static const ROUTE_NAME = '/popular-tv';
+  static const routeName = '/popular-tv';
 
   const PopularTvsPage({super.key});
 
   @override
-  _PopularTvsPageState createState() => _PopularTvsPageState();
+  PopularTvsPageState createState() => PopularTvsPageState();
 }
 
-class _PopularTvsPageState extends State<PopularTvsPage> {
+class PopularTvsPageState extends State<PopularTvsPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => Provider.of<PopularTvsNotifier>(
-        context,
-        listen: false,
-      ).fetchPopularTvs(),
-    );
+
+    Future.microtask(() {
+      if (mounted) {
+        Provider.of<PopularTvsNotifier>(
+          context,
+          listen: false,
+        ).fetchPopularTvs();
+      }
+    });
   }
 
   @override
@@ -33,9 +36,9 @@ class _PopularTvsPageState extends State<PopularTvsPage> {
         padding: const EdgeInsets.all(8.0),
         child: Consumer<PopularTvsNotifier>(
           builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+            if (data.state == RequestState.loading) {
               return Center(child: CircularProgressIndicator());
-            } else if (data.state == RequestState.Loaded) {
+            } else if (data.state == RequestState.loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final tv = data.tvs[index];

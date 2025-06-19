@@ -5,22 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TopRatedTvsPage extends StatefulWidget {
-  static const ROUTE_NAME = '/top-rated-tv';
+  static const routeName = '/top-rated-tv';
+
+  const TopRatedTvsPage({super.key});
 
   @override
-  _TopRatedTvsPageState createState() => _TopRatedTvsPageState();
+  TopRatedTvsPageState createState() => TopRatedTvsPageState();
 }
 
-class _TopRatedTvsPageState extends State<TopRatedTvsPage> {
+class TopRatedTvsPageState extends State<TopRatedTvsPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => Provider.of<TopRatedTvsNotifier>(
-        context,
-        listen: false,
-      ).fetchTopRatedTvs(),
-    );
+    Future.microtask(() {
+      if (mounted) {
+        Provider.of<TopRatedTvsNotifier>(
+          context,
+          listen: false,
+        ).fetchTopRatedTvs();
+      }
+    });
   }
 
   @override
@@ -31,9 +35,9 @@ class _TopRatedTvsPageState extends State<TopRatedTvsPage> {
         padding: const EdgeInsets.all(8.0),
         child: Consumer<TopRatedTvsNotifier>(
           builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+            if (data.state == RequestState.loading) {
               return Center(child: CircularProgressIndicator());
-            } else if (data.state == RequestState.Loaded) {
+            } else if (data.state == RequestState.loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final tv = data.tvs[index];

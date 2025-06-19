@@ -39,12 +39,12 @@ void main() {
     'Watchlist button should display add icon when movie not added to watchlist',
     (WidgetTester tester) async {
       // Arrange: Atur state awal notifier
-      when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.Loaded);
+      when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.loaded);
       when(mockMovieDetailNotifier.movie).thenReturn(testMovieDetail);
       when(mockMovieDetailNotifier.movieRecommendations).thenReturn(<Movie>[]);
       when(
         mockMovieDetailNotifier.recommendationState,
-      ).thenReturn(RequestState.Loaded);
+      ).thenReturn(RequestState.loaded);
       when(mockWatchlistNotifier.isAddedToWatchlist).thenReturn(false);
 
       // Act: Render widget
@@ -60,12 +60,12 @@ void main() {
     'Watchlist button should display check icon when movie is added to watchlist',
     (WidgetTester tester) async {
       // Arrange
-      when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.Loaded);
+      when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.loaded);
       when(mockMovieDetailNotifier.movie).thenReturn(testMovieDetail);
       when(mockMovieDetailNotifier.movieRecommendations).thenReturn(<Movie>[]);
       when(
         mockMovieDetailNotifier.recommendationState,
-      ).thenReturn(RequestState.Loaded);
+      ).thenReturn(RequestState.loaded);
       when(mockWatchlistNotifier.isAddedToWatchlist).thenReturn(true);
 
       // Act
@@ -81,12 +81,12 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.Loaded);
+    when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.loaded);
     when(mockMovieDetailNotifier.movie).thenReturn(testMovieDetail);
     when(mockMovieDetailNotifier.movieRecommendations).thenReturn(<Movie>[]);
     when(
       mockMovieDetailNotifier.recommendationState,
-    ).thenReturn(RequestState.Loaded);
+    ).thenReturn(RequestState.loaded);
     when(mockWatchlistNotifier.isAddedToWatchlist).thenReturn(false);
     when(
       mockWatchlistNotifier.watchlistMessage,
@@ -112,12 +112,12 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.Loaded);
+    when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.loaded);
     when(mockMovieDetailNotifier.movie).thenReturn(testMovieDetail);
     when(mockMovieDetailNotifier.movieRecommendations).thenReturn(<Movie>[]);
     when(
       mockMovieDetailNotifier.recommendationState,
-    ).thenReturn(RequestState.Loaded);
+    ).thenReturn(RequestState.loaded);
     when(mockWatchlistNotifier.isAddedToWatchlist).thenReturn(false);
     when(mockWatchlistNotifier.watchlistMessage).thenReturn('Failed');
 
@@ -139,7 +139,7 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.Loading);
+    when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.loading);
 
     // Act
     await tester.pumpWidget(makeTestableWidget(MovieDetailPage(id: 1)));
@@ -152,7 +152,7 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.Error);
+    when(mockMovieDetailNotifier.movieState).thenReturn(RequestState.error);
     when(mockMovieDetailNotifier.message).thenReturn('Failed to load data');
 
     // Act

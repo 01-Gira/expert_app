@@ -37,8 +37,8 @@ void main() {
     return MaterialApp(
       home: Scaffold(body: body),
       routes: {
-        MovieDetailPage.ROUTE_NAME: (context) => FakeMovieDetailPage(),
-        TvDetailPage.ROUTE_NAME: (context) => FakeTvDetailPage(),
+        MovieDetailPage.routeName: (context) => FakeMovieDetailPage(),
+        TvDetailPage.routeName: (context) => FakeTvDetailPage(),
       },
       navigatorObservers: [mockNavigatorObserver],
     );

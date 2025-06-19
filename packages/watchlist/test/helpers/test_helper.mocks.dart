@@ -320,7 +320,7 @@ class MockWatchlistNotifier extends _i1.Mock implements _i17.WatchlistNotifier {
   _i18.RequestState get watchlistState =>
       (super.noSuchMethod(
             Invocation.getter(#watchlistState),
-            returnValue: _i18.RequestState.Empty,
+            returnValue: _i18.RequestState.empty,
           )
           as _i18.RequestState);
 

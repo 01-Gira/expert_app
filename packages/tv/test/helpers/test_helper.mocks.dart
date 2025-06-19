@@ -356,7 +356,7 @@ class MockPopularTvsNotifier extends _i1.Mock
   _i21.RequestState get state =>
       (super.noSuchMethod(
             Invocation.getter(#state),
-            returnValue: _i21.RequestState.Empty,
+            returnValue: _i21.RequestState.empty,
           )
           as _i21.RequestState);
 
@@ -439,7 +439,7 @@ class MockTopRatedTvsNotifier extends _i1.Mock
   _i21.RequestState get state =>
       (super.noSuchMethod(
             Invocation.getter(#state),
-            returnValue: _i21.RequestState.Empty,
+            returnValue: _i21.RequestState.empty,
           )
           as _i21.RequestState);
 
@@ -540,7 +540,7 @@ class MockTvDetailNotifier extends _i1.Mock implements _i25.TvDetailNotifier {
   _i21.RequestState get tvState =>
       (super.noSuchMethod(
             Invocation.getter(#tvState),
-            returnValue: _i21.RequestState.Empty,
+            returnValue: _i21.RequestState.empty,
           )
           as _i21.RequestState);
 
@@ -556,7 +556,7 @@ class MockTvDetailNotifier extends _i1.Mock implements _i25.TvDetailNotifier {
   _i21.RequestState get recommendationState =>
       (super.noSuchMethod(
             Invocation.getter(#recommendationState),
-            returnValue: _i21.RequestState.Empty,
+            returnValue: _i21.RequestState.empty,
           )
           as _i21.RequestState);
 
@@ -761,7 +761,7 @@ class MockWatchlistNotifier extends _i1.Mock implements _i27.WatchlistNotifier {
   _i21.RequestState get watchlistState =>
       (super.noSuchMethod(
             Invocation.getter(#watchlistState),
-            returnValue: _i21.RequestState.Empty,
+            returnValue: _i21.RequestState.empty,
           )
           as _i21.RequestState);
 

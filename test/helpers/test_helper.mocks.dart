@@ -122,7 +122,7 @@ class MockMovieListNotifier extends _i1.Mock implements _i8.MovieListNotifier {
   _i10.RequestState get nowPlayingState =>
       (super.noSuchMethod(
             Invocation.getter(#nowPlayingState),
-            returnValue: _i10.RequestState.Empty,
+            returnValue: _i10.RequestState.empty,
           )
           as _i10.RequestState);
 
@@ -138,7 +138,7 @@ class MockMovieListNotifier extends _i1.Mock implements _i8.MovieListNotifier {
   _i10.RequestState get popularMoviesState =>
       (super.noSuchMethod(
             Invocation.getter(#popularMoviesState),
-            returnValue: _i10.RequestState.Empty,
+            returnValue: _i10.RequestState.empty,
           )
           as _i10.RequestState);
 
@@ -154,7 +154,7 @@ class MockMovieListNotifier extends _i1.Mock implements _i8.MovieListNotifier {
   _i10.RequestState get topRatedMoviesState =>
       (super.noSuchMethod(
             Invocation.getter(#topRatedMoviesState),
-            returnValue: _i10.RequestState.Empty,
+            returnValue: _i10.RequestState.empty,
           )
           as _i10.RequestState);
 
@@ -279,7 +279,7 @@ class MockTvListNotifier extends _i1.Mock implements _i14.TvListNotifier {
   _i10.RequestState get onTheAirTvsState =>
       (super.noSuchMethod(
             Invocation.getter(#onTheAirTvsState),
-            returnValue: _i10.RequestState.Empty,
+            returnValue: _i10.RequestState.empty,
           )
           as _i10.RequestState);
 
@@ -295,7 +295,7 @@ class MockTvListNotifier extends _i1.Mock implements _i14.TvListNotifier {
   _i10.RequestState get popularTvsState =>
       (super.noSuchMethod(
             Invocation.getter(#popularTvsState),
-            returnValue: _i10.RequestState.Empty,
+            returnValue: _i10.RequestState.empty,
           )
           as _i10.RequestState);
 
@@ -311,7 +311,7 @@ class MockTvListNotifier extends _i1.Mock implements _i14.TvListNotifier {
   _i10.RequestState get topRatedTvsState =>
       (super.noSuchMethod(
             Invocation.getter(#topRatedTvsState),
-            returnValue: _i10.RequestState.Empty,
+            returnValue: _i10.RequestState.empty,
           )
           as _i10.RequestState);
 

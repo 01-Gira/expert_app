@@ -19,13 +19,13 @@ class MediaCard extends StatelessWidget {
           if (item.mediaType == 'movie') {
             Navigator.pushNamed(
               context,
-              MovieDetailPage.ROUTE_NAME,
+              MovieDetailPage.routeName,
               arguments: item.id,
             );
           } else if (item.mediaType == 'tv') {
             Navigator.pushNamed(
               context,
-              TvDetailPage.ROUTE_NAME,
+              TvDetailPage.routeName,
               arguments: item.id,
             );
           }

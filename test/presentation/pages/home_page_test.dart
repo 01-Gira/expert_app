@@ -19,7 +19,7 @@ void main() {
     mockTvListNotifier = MockTvListNotifier();
   });
 
-  Widget _makeTestableWidget(Widget body) {
+  Widget makeTestableWidget(Widget body) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<MovieListNotifier>.value(
@@ -36,21 +36,21 @@ void main() {
     (WidgetTester tester) async {
       when(
         mockMovieListNotifier.nowPlayingState,
-      ).thenReturn(RequestState.Loading);
+      ).thenReturn(RequestState.loading);
       when(
         mockMovieListNotifier.popularMoviesState,
-      ).thenReturn(RequestState.Loading);
+      ).thenReturn(RequestState.loading);
       when(
         mockMovieListNotifier.topRatedMoviesState,
-      ).thenReturn(RequestState.Loading);
-      when(mockTvListNotifier.onTheAirTvsState).thenReturn(RequestState.Empty);
-      when(mockTvListNotifier.popularTvsState).thenReturn(RequestState.Empty);
-      when(mockTvListNotifier.topRatedTvsState).thenReturn(RequestState.Empty);
+      ).thenReturn(RequestState.loading);
+      when(mockTvListNotifier.onTheAirTvsState).thenReturn(RequestState.empty);
+      when(mockTvListNotifier.popularTvsState).thenReturn(RequestState.empty);
+      when(mockTvListNotifier.topRatedTvsState).thenReturn(RequestState.empty);
 
       // Act
       final progressFinder = find.byType(CircularProgressIndicator);
 
-      await tester.pumpWidget(_makeTestableWidget(HomePage()));
+      await tester.pumpWidget(makeTestableWidget(HomePage()));
 
       expect(progressFinder, findsNWidgets(3));
     },
@@ -59,25 +59,25 @@ void main() {
   testWidgets('Page should display movie lists when data is loaded', (
     WidgetTester tester,
   ) async {
-    when(mockMovieListNotifier.nowPlayingState).thenReturn(RequestState.Loaded);
+    when(mockMovieListNotifier.nowPlayingState).thenReturn(RequestState.loaded);
     when(mockMovieListNotifier.nowPlayingMovies).thenReturn(testMovieList);
     when(
       mockMovieListNotifier.popularMoviesState,
-    ).thenReturn(RequestState.Loaded);
+    ).thenReturn(RequestState.loaded);
     when(mockMovieListNotifier.popularMovies).thenReturn(testMovieList);
     when(
       mockMovieListNotifier.topRatedMoviesState,
-    ).thenReturn(RequestState.Loaded);
+    ).thenReturn(RequestState.loaded);
     when(mockMovieListNotifier.topRatedMovies).thenReturn(testMovieList);
 
-    when(mockTvListNotifier.onTheAirTvsState).thenReturn(RequestState.Empty);
-    when(mockTvListNotifier.popularTvsState).thenReturn(RequestState.Empty);
-    when(mockTvListNotifier.topRatedTvsState).thenReturn(RequestState.Empty);
+    when(mockTvListNotifier.onTheAirTvsState).thenReturn(RequestState.empty);
+    when(mockTvListNotifier.popularTvsState).thenReturn(RequestState.empty);
+    when(mockTvListNotifier.topRatedTvsState).thenReturn(RequestState.empty);
 
     // Act
     final listViewFinder = find.byType(ListView);
 
-    await tester.pumpWidget(_makeTestableWidget(HomePage()));
+    await tester.pumpWidget(makeTestableWidget(HomePage()));
     // Assert
     expect(listViewFinder, findsNWidgets(3));
   });
@@ -86,23 +86,23 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockTvListNotifier.onTheAirTvsState).thenReturn(RequestState.Loaded);
+    when(mockTvListNotifier.onTheAirTvsState).thenReturn(RequestState.loaded);
     when(mockTvListNotifier.onTheAirTvs).thenReturn(testTvList);
-    when(mockTvListNotifier.popularTvsState).thenReturn(RequestState.Loaded);
+    when(mockTvListNotifier.popularTvsState).thenReturn(RequestState.loaded);
     when(mockTvListNotifier.popularTvs).thenReturn(testTvList);
-    when(mockTvListNotifier.topRatedTvsState).thenReturn(RequestState.Loaded);
+    when(mockTvListNotifier.topRatedTvsState).thenReturn(RequestState.loaded);
     when(mockTvListNotifier.topRatedTvs).thenReturn(testTvList);
 
-    when(mockMovieListNotifier.nowPlayingState).thenReturn(RequestState.Empty);
+    when(mockMovieListNotifier.nowPlayingState).thenReturn(RequestState.empty);
     when(
       mockMovieListNotifier.popularMoviesState,
-    ).thenReturn(RequestState.Empty);
+    ).thenReturn(RequestState.empty);
     when(
       mockMovieListNotifier.topRatedMoviesState,
-    ).thenReturn(RequestState.Empty);
+    ).thenReturn(RequestState.empty);
 
     // Act
-    await tester.pumpWidget(_makeTestableWidget(HomePage()));
+    await tester.pumpWidget(makeTestableWidget(HomePage()));
 
     await tester.tap(find.byIcon(Icons.tv));
     await tester.pump();
@@ -124,21 +124,21 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockMovieListNotifier.nowPlayingState).thenReturn(RequestState.Error);
+    when(mockMovieListNotifier.nowPlayingState).thenReturn(RequestState.error);
     when(mockMovieListNotifier.message).thenReturn('Failed');
 
     when(
       mockMovieListNotifier.popularMoviesState,
-    ).thenReturn(RequestState.Empty);
+    ).thenReturn(RequestState.empty);
     when(
       mockMovieListNotifier.topRatedMoviesState,
-    ).thenReturn(RequestState.Empty);
-    when(mockTvListNotifier.onTheAirTvsState).thenReturn(RequestState.Empty);
-    when(mockTvListNotifier.popularTvsState).thenReturn(RequestState.Empty);
-    when(mockTvListNotifier.topRatedTvsState).thenReturn(RequestState.Empty);
+    ).thenReturn(RequestState.empty);
+    when(mockTvListNotifier.onTheAirTvsState).thenReturn(RequestState.empty);
+    when(mockTvListNotifier.popularTvsState).thenReturn(RequestState.empty);
+    when(mockTvListNotifier.topRatedTvsState).thenReturn(RequestState.empty);
 
     // Act
-    await tester.pumpWidget(_makeTestableWidget(HomePage()));
+    await tester.pumpWidget(makeTestableWidget(HomePage()));
 
     // Assert
     expect(find.text('Failed to load now playing movies'), findsOneWidget);

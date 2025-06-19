@@ -6,24 +6,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WatchlistPage extends StatefulWidget {
-  static const ROUTE_NAME = '/watchlist';
+  static const routeName = '/watchlist';
 
   const WatchlistPage({super.key});
 
   @override
-  _WatchlistPageState createState() => _WatchlistPageState();
+  WatchlistPageState createState() => WatchlistPageState();
 }
 
-class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
+class WatchlistPageState extends State<WatchlistPage> with RouteAware {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => Provider.of<WatchlistNotifier>(
-        context,
-        listen: false,
-      ).fetchWatchlistItems(),
-    );
+    Future.microtask(() {
+      if (mounted) {
+        Provider.of<WatchlistNotifier>(
+          context,
+          listen: false,
+        ).fetchWatchlistItems();
+      }
+    });
   }
 
   @override
@@ -48,9 +50,9 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
         padding: const EdgeInsets.all(8.0),
         child: Consumer<WatchlistNotifier>(
           builder: (context, data, child) {
-            if (data.watchlistState == RequestState.Loading) {
+            if (data.watchlistState == RequestState.loading) {
               return Center(child: CircularProgressIndicator());
-            } else if (data.watchlistState == RequestState.Loaded) {
+            } else if (data.watchlistState == RequestState.loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final item = data.watchlistItems[index];

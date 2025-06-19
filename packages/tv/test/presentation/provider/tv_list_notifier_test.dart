@@ -48,7 +48,7 @@ void main() {
 
   group('on the air tvs', () {
     test('initialState should be Empty', () {
-      expect(provider.onTheAirTvsState, equals(RequestState.Empty));
+      expect(provider.onTheAirTvsState, equals(RequestState.empty));
     });
 
     test('should get data from the usecase', () async {
@@ -70,7 +70,7 @@ void main() {
       // act
       provider.fetchOnTheAirTvs();
       // assert
-      expect(provider.onTheAirTvsState, RequestState.Loading);
+      expect(provider.onTheAirTvsState, RequestState.loading);
     });
 
     test('should change tvs when data is gotten successfully', () async {
@@ -81,7 +81,7 @@ void main() {
       // act
       await provider.fetchOnTheAirTvs();
       // assert
-      expect(provider.onTheAirTvsState, RequestState.Loaded);
+      expect(provider.onTheAirTvsState, RequestState.loaded);
       expect(provider.onTheAirTvs, tTvList);
       expect(listenerCallCount, 2);
     });
@@ -94,7 +94,7 @@ void main() {
       // act
       await provider.fetchOnTheAirTvs();
       // assert
-      expect(provider.onTheAirTvsState, RequestState.Error);
+      expect(provider.onTheAirTvsState, RequestState.error);
       expect(provider.message, 'Server Failure');
       expect(listenerCallCount, 2);
     });
@@ -107,7 +107,7 @@ void main() {
       // act
       provider.fetchPopularTvs();
       // assert
-      expect(provider.popularTvsState, RequestState.Loading);
+      expect(provider.popularTvsState, RequestState.loading);
     });
 
     test('should change tvs data when data is gotten successfully', () async {
@@ -116,7 +116,7 @@ void main() {
       // act
       await provider.fetchPopularTvs();
       // assert
-      expect(provider.popularTvsState, RequestState.Loaded);
+      expect(provider.popularTvsState, RequestState.loaded);
       expect(provider.popularTvs, tTvList);
       expect(listenerCallCount, 2);
     });
@@ -129,7 +129,7 @@ void main() {
       // act
       await provider.fetchPopularTvs();
       // assert
-      expect(provider.popularTvsState, RequestState.Error);
+      expect(provider.popularTvsState, RequestState.error);
       expect(provider.message, 'Server Failure');
       expect(listenerCallCount, 2);
     });
@@ -144,7 +144,7 @@ void main() {
       // act
       provider.fetchTopRatedTvs();
       // assert
-      expect(provider.topRatedTvsState, RequestState.Loading);
+      expect(provider.topRatedTvsState, RequestState.loading);
     });
 
     test('should change tvs data when data is gotten successfully', () async {
@@ -155,7 +155,7 @@ void main() {
       // act
       await provider.fetchTopRatedTvs();
       // assert
-      expect(provider.topRatedTvsState, RequestState.Loaded);
+      expect(provider.topRatedTvsState, RequestState.loaded);
       expect(provider.topRatedTvs, tTvList);
       expect(listenerCallCount, 2);
     });
@@ -168,7 +168,7 @@ void main() {
       // act
       await provider.fetchTopRatedTvs();
       // assert
-      expect(provider.topRatedTvsState, RequestState.Error);
+      expect(provider.topRatedTvsState, RequestState.error);
       expect(provider.message, 'Server Failure');
       expect(listenerCallCount, 2);
     });

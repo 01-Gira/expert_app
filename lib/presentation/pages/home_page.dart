@@ -20,22 +20,24 @@ import 'package:provider/provider.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<MovieListNotifier>(context, listen: false)
-        ..fetchNowPlayingMovies()
-        ..fetchPopularMovies()
-        ..fetchTopRatedMovies();
-      Provider.of<TvListNotifier>(context, listen: false)
-        ..fetchOnTheAirTvs()
-        ..fetchPopularTvs()
-        ..fetchTopRatedTvs();
+      if (mounted) {
+        Provider.of<MovieListNotifier>(context, listen: false)
+          ..fetchNowPlayingMovies()
+          ..fetchPopularMovies()
+          ..fetchTopRatedMovies();
+        Provider.of<TvListNotifier>(context, listen: false)
+          ..fetchOnTheAirTvs()
+          ..fetchPopularTvs()
+          ..fetchTopRatedTvs();
+      }
     });
   }
 
@@ -67,12 +69,12 @@ class _HomePageState extends State<HomePage> {
                 leading: Icon(Icons.save_alt),
                 title: Text('Watchlist'),
                 onTap: () {
-                  Navigator.pushNamed(context, WatchlistPage.ROUTE_NAME);
+                  Navigator.pushNamed(context, WatchlistPage.routeName);
                 },
               ),
               ListTile(
                 onTap: () {
-                  Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
+                  Navigator.pushNamed(context, AboutPage.routeName);
                 },
                 leading: Icon(Icons.info_outline),
                 title: Text('About'),
@@ -85,7 +87,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
+                Navigator.pushNamed(context, SearchPage.routeName);
               },
               icon: Icon(Icons.search),
             ),
@@ -125,9 +127,9 @@ class MovieTabPage extends StatelessWidget {
             Consumer<MovieListNotifier>(
               builder: (context, data, child) {
                 final state = data.nowPlayingState;
-                if (state == RequestState.Loading) {
+                if (state == RequestState.loading) {
                   return Center(child: CircularProgressIndicator());
-                } else if (state == RequestState.Loaded) {
+                } else if (state == RequestState.loaded) {
                   return MovieList(data.nowPlayingMovies);
                 } else {
                   return Text('Failed to load now playing movies');
@@ -137,14 +139,14 @@ class MovieTabPage extends StatelessWidget {
             _buildSubHeading(
               title: 'Popular',
               onTap: () =>
-                  Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
+                  Navigator.pushNamed(context, PopularMoviesPage.routeName),
             ),
             Consumer<MovieListNotifier>(
               builder: (context, data, child) {
                 final state = data.popularMoviesState;
-                if (state == RequestState.Loading) {
+                if (state == RequestState.loading) {
                   return Center(child: CircularProgressIndicator());
-                } else if (state == RequestState.Loaded) {
+                } else if (state == RequestState.loaded) {
                   return MovieList(data.popularMovies);
                 } else {
                   return Text('Failed to load popular movies');
@@ -154,14 +156,14 @@ class MovieTabPage extends StatelessWidget {
             _buildSubHeading(
               title: 'Top Rated',
               onTap: () =>
-                  Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
+                  Navigator.pushNamed(context, TopRatedMoviesPage.routeName),
             ),
             Consumer<MovieListNotifier>(
               builder: (context, data, child) {
                 final state = data.topRatedMoviesState;
-                if (state == RequestState.Loading) {
+                if (state == RequestState.loading) {
                   return Center(child: CircularProgressIndicator());
-                } else if (state == RequestState.Loaded) {
+                } else if (state == RequestState.loaded) {
                   return MovieList(data.topRatedMovies);
                 } else {
                   return Text('Failed to load top rated movies');
@@ -191,9 +193,9 @@ class TvTabPage extends StatelessWidget {
             Consumer<TvListNotifier>(
               builder: (context, data, child) {
                 final state = data.onTheAirTvsState;
-                if (state == RequestState.Loading) {
+                if (state == RequestState.loading) {
                   return Center(child: CircularProgressIndicator());
-                } else if (state == RequestState.Loaded) {
+                } else if (state == RequestState.loaded) {
                   return TvList(data.onTheAirTvs);
                 } else {
                   return Text('Failed to load on the latest tv shows');
@@ -203,14 +205,14 @@ class TvTabPage extends StatelessWidget {
             _buildSubHeading(
               title: 'Popular',
               onTap: () =>
-                  Navigator.pushNamed(context, PopularTvsPage.ROUTE_NAME),
+                  Navigator.pushNamed(context, PopularTvsPage.routeName),
             ),
             Consumer<TvListNotifier>(
               builder: (context, data, child) {
                 final state = data.popularTvsState;
-                if (state == RequestState.Loading) {
+                if (state == RequestState.loading) {
                   return Center(child: CircularProgressIndicator());
-                } else if (state == RequestState.Loaded) {
+                } else if (state == RequestState.loaded) {
                   return TvList(data.popularTvs);
                 } else {
                   return Text('Failed to load popular tv shows');
@@ -220,14 +222,14 @@ class TvTabPage extends StatelessWidget {
             _buildSubHeading(
               title: 'Top Rated',
               onTap: () =>
-                  Navigator.pushNamed(context, TopRatedTvsPage.ROUTE_NAME),
+                  Navigator.pushNamed(context, TopRatedTvsPage.routeName),
             ),
             Consumer<TvListNotifier>(
               builder: (context, data, child) {
                 final state = data.topRatedTvsState;
-                if (state == RequestState.Loading) {
+                if (state == RequestState.loading) {
                   return Center(child: CircularProgressIndicator());
-                } else if (state == RequestState.Loaded) {
+                } else if (state == RequestState.loaded) {
                   return TvList(data.topRatedTvs);
                 } else {
                   return Text('Failed to load top rated tv shows');
@@ -278,7 +280,7 @@ class MovieList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  MovieDetailPage.ROUTE_NAME,
+                  MovieDetailPage.routeName,
                   arguments: movie.id,
                 );
               },
@@ -319,7 +321,7 @@ class TvList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  TvDetailPage.ROUTE_NAME,
+                  TvDetailPage.routeName,
                   arguments: tv.id,
                 );
               },

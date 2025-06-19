@@ -11,28 +11,30 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class MovieDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/movie-detail';
+  static const routeName = '/movie-detail';
 
   final int id;
   const MovieDetailPage({super.key, required this.id});
 
   @override
-  _MovieDetailPageState createState() => _MovieDetailPageState();
+  MovieDetailPageState createState() => MovieDetailPageState();
 }
 
-class _MovieDetailPageState extends State<MovieDetailPage> {
+class MovieDetailPageState extends State<MovieDetailPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<MovieDetailNotifier>(
-        context,
-        listen: false,
-      ).fetchMovieDetail(widget.id);
-      Provider.of<WatchlistNotifier>(
-        context,
-        listen: false,
-      ).loadWatchlistStatus(widget.id, 'movie');
+      if (mounted) {
+        Provider.of<MovieDetailNotifier>(
+          context,
+          listen: false,
+        ).fetchMovieDetail(widget.id);
+        Provider.of<WatchlistNotifier>(
+          context,
+          listen: false,
+        ).loadWatchlistStatus(widget.id, 'movie');
+      }
     });
   }
 
@@ -41,9 +43,9 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
     return Scaffold(
       body: Consumer<MovieDetailNotifier>(
         builder: (context, movieDetailProvider, child) {
-          if (movieDetailProvider.movieState == RequestState.Loading) {
+          if (movieDetailProvider.movieState == RequestState.loading) {
             return Center(child: CircularProgressIndicator());
-          } else if (movieDetailProvider.movieState == RequestState.Loaded) {
+          } else if (movieDetailProvider.movieState == RequestState.loaded) {
             final movie = movieDetailProvider.movie;
             return Consumer<WatchlistNotifier>(
               builder: (context, watchlistProvider, child) {
@@ -112,42 +114,51 @@ class DetailContent extends StatelessWidget {
                             Text(movie.title, style: kHeading5),
                             FilledButton(
                               onPressed: () async {
+                                final watchlistNotifier =
+                                    Provider.of<WatchlistNotifier>(
+                                      context,
+                                      listen: false,
+                                    );
+                                final scaffoldMessenger = ScaffoldMessenger.of(
+                                  context,
+                                );
+
                                 if (!isAddedWatchlist) {
                                   final mediaItem = movie.toMedia();
-                                  await Provider.of<WatchlistNotifier>(
-                                    context,
-                                    listen: false,
-                                  ).addWatchlist(mediaItem);
+                                  await watchlistNotifier.addWatchlist(
+                                    mediaItem,
+                                  );
                                 } else {
-                                  await Provider.of<WatchlistNotifier>(
-                                    context,
-                                    listen: false,
-                                  ).removeFromWatchlist(movie.id, 'movie');
+                                  await watchlistNotifier.removeFromWatchlist(
+                                    movie.id,
+                                    'movie',
+                                  );
                                 }
 
-                                final message = Provider.of<WatchlistNotifier>(
-                                  context,
-                                  listen: false,
-                                ).watchlistMessage;
+                                final message =
+                                    watchlistNotifier.watchlistMessage;
 
-                                if (message ==
-                                        WatchlistNotifier
-                                            .watchlistAddSuccessMessage ||
-                                    message ==
-                                        WatchlistNotifier
-                                            .watchlistRemoveSuccessMessage) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(message)),
-                                  );
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        content: Text(message),
-                                      );
-                                    },
-                                  );
+                                // DIUBAH: Gunakan referensi messenger dan cek 'mounted'
+                                if (context.mounted) {
+                                  if (message ==
+                                          WatchlistNotifier
+                                              .watchlistAddSuccessMessage ||
+                                      message ==
+                                          WatchlistNotifier
+                                              .watchlistRemoveSuccessMessage) {
+                                    scaffoldMessenger.showSnackBar(
+                                      SnackBar(content: Text(message)),
+                                    );
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text(message),
+                                        );
+                                      },
+                                    );
+                                  }
                                 }
                               },
                               child: Row(
@@ -182,15 +193,15 @@ class DetailContent extends StatelessWidget {
                             Consumer<MovieDetailNotifier>(
                               builder: (context, data, child) {
                                 if (data.recommendationState ==
-                                    RequestState.Loading) {
+                                    RequestState.loading) {
                                   return Center(
                                     child: CircularProgressIndicator(),
                                   );
                                 } else if (data.recommendationState ==
-                                    RequestState.Error) {
+                                    RequestState.error) {
                                   return Text(data.message);
                                 } else if (data.recommendationState ==
-                                    RequestState.Loaded) {
+                                    RequestState.loaded) {
                                   return SizedBox(
                                     height: 150,
                                     child: ListView.builder(
@@ -203,7 +214,7 @@ class DetailContent extends StatelessWidget {
                                             onTap: () {
                                               Navigator.pushReplacementNamed(
                                                 context,
-                                                MovieDetailPage.ROUTE_NAME,
+                                                MovieDetailPage.routeName,
                                                 arguments: movie.id,
                                               );
                                             },

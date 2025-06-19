@@ -25,7 +25,7 @@ class WatchlistNotifier extends ChangeNotifier {
   var _watchlistItems = <Media>[];
   List<Media> get watchlistItems => _watchlistItems;
 
-  var _watchlistState = RequestState.Empty;
+  var _watchlistState = RequestState.empty;
   RequestState get watchlistState => _watchlistState;
 
   String _message = '';
@@ -35,18 +35,18 @@ class WatchlistNotifier extends ChangeNotifier {
   bool get isAddedToWatchlist => _isAddedToWatchlist;
 
   Future<void> fetchWatchlistItems() async {
-    _watchlistState = RequestState.Loading;
+    _watchlistState = RequestState.loading;
     notifyListeners();
 
     final result = await getWatchlistItems.execute();
     result.fold(
       (failure) {
-        _watchlistState = RequestState.Error;
+        _watchlistState = RequestState.error;
         _message = failure.message;
         notifyListeners();
       },
       (itemsData) {
-        _watchlistState = RequestState.Loaded;
+        _watchlistState = RequestState.loaded;
         _watchlistItems = itemsData;
         notifyListeners();
       },

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Widget _makeTestableWidget(Widget body) {
+  Widget makeTestableWidget(Widget body) {
     return MaterialApp(home: body);
   }
 
@@ -11,7 +11,7 @@ void main() {
     WidgetTester tester,
   ) async {
     // Act
-    await tester.pumpWidget(_makeTestableWidget(AboutPage()));
+    await tester.pumpWidget(makeTestableWidget(AboutPage()));
 
     // Assert
     final imageFinder = find.byType(Image);

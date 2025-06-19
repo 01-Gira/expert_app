@@ -3,15 +3,13 @@ import 'package:core/common/exception.dart';
 import 'package:search/data/models/media_model.dart';
 import 'package:search/data/models/media_response.dart';
 import 'package:http/http.dart' as http;
+import 'package:core/common/api_config.dart';
 
 abstract class SearchRemoteDataSource {
   Future<List<MediaModel>> searchMulti(String query);
 }
 
 class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
-  static const API_KEY = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
-  static const BASE_URL = 'https://api.themoviedb.org/3';
-
   final http.Client client;
 
   SearchRemoteDataSourceImpl({required this.client});
@@ -19,7 +17,7 @@ class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
   @override
   Future<List<MediaModel>> searchMulti(String query) async {
     final response = await client.get(
-      Uri.parse('$BASE_URL/search/multi?$API_KEY&query=$query'),
+      Uri.parse('$baseUrl/search/multi?$apiKey&query=$query'),
     );
 
     if (response.statusCode == 200) {

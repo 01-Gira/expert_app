@@ -528,7 +528,7 @@ class MockMovieDetailNotifier extends _i1.Mock
   _i23.RequestState get movieState =>
       (super.noSuchMethod(
             Invocation.getter(#movieState),
-            returnValue: _i23.RequestState.Empty,
+            returnValue: _i23.RequestState.empty,
           )
           as _i23.RequestState);
 
@@ -544,7 +544,7 @@ class MockMovieDetailNotifier extends _i1.Mock
   _i23.RequestState get recommendationState =>
       (super.noSuchMethod(
             Invocation.getter(#recommendationState),
-            returnValue: _i23.RequestState.Empty,
+            returnValue: _i23.RequestState.empty,
           )
           as _i23.RequestState);
 
@@ -633,7 +633,7 @@ class MockPopularMoviesNotifier extends _i1.Mock
   _i23.RequestState get state =>
       (super.noSuchMethod(
             Invocation.getter(#state),
-            returnValue: _i23.RequestState.Empty,
+            returnValue: _i23.RequestState.empty,
           )
           as _i23.RequestState);
 
@@ -719,7 +719,7 @@ class MockTopRatedMoviesNotifier extends _i1.Mock
   _i23.RequestState get state =>
       (super.noSuchMethod(
             Invocation.getter(#state),
-            returnValue: _i23.RequestState.Empty,
+            returnValue: _i23.RequestState.empty,
           )
           as _i23.RequestState);
 
@@ -845,7 +845,7 @@ class MockWatchlistNotifier extends _i1.Mock implements _i28.WatchlistNotifier {
   _i23.RequestState get watchlistState =>
       (super.noSuchMethod(
             Invocation.getter(#watchlistState),
-            returnValue: _i23.RequestState.Empty,
+            returnValue: _i23.RequestState.empty,
           )
           as _i23.RequestState);
 

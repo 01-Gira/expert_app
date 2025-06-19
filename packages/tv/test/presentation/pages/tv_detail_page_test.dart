@@ -38,12 +38,12 @@ void main() {
     'Watchlist button should display add icon when tv not added to watchlist',
     (WidgetTester tester) async {
       // Arrange: Atur state awal notifier
-      when(mockTvDetailNotifier.tvState).thenReturn(RequestState.Loaded);
+      when(mockTvDetailNotifier.tvState).thenReturn(RequestState.loaded);
       when(mockTvDetailNotifier.tv).thenReturn(testTvDetail);
       when(mockTvDetailNotifier.tvRecommendations).thenReturn(<Tv>[]);
       when(
         mockTvDetailNotifier.recommendationState,
-      ).thenReturn(RequestState.Loaded);
+      ).thenReturn(RequestState.loaded);
       when(mockWatchlistNotifier.isAddedToWatchlist).thenReturn(false);
 
       // Act: Render widget
@@ -59,12 +59,12 @@ void main() {
     'Watchlist button should display check icon when tv is added to watchlist',
     (WidgetTester tester) async {
       // Arrange
-      when(mockTvDetailNotifier.tvState).thenReturn(RequestState.Loaded);
+      when(mockTvDetailNotifier.tvState).thenReturn(RequestState.loaded);
       when(mockTvDetailNotifier.tv).thenReturn(testTvDetail);
       when(mockTvDetailNotifier.tvRecommendations).thenReturn(<Tv>[]);
       when(
         mockTvDetailNotifier.recommendationState,
-      ).thenReturn(RequestState.Loaded);
+      ).thenReturn(RequestState.loaded);
       when(mockWatchlistNotifier.isAddedToWatchlist).thenReturn(true);
 
       // Act
@@ -80,12 +80,12 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockTvDetailNotifier.tvState).thenReturn(RequestState.Loaded);
+    when(mockTvDetailNotifier.tvState).thenReturn(RequestState.loaded);
     when(mockTvDetailNotifier.tv).thenReturn(testTvDetail);
     when(mockTvDetailNotifier.tvRecommendations).thenReturn(<Tv>[]);
     when(
       mockTvDetailNotifier.recommendationState,
-    ).thenReturn(RequestState.Loaded);
+    ).thenReturn(RequestState.loaded);
     when(mockWatchlistNotifier.isAddedToWatchlist).thenReturn(false);
     when(
       mockWatchlistNotifier.watchlistMessage,
@@ -111,12 +111,12 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockTvDetailNotifier.tvState).thenReturn(RequestState.Loaded);
+    when(mockTvDetailNotifier.tvState).thenReturn(RequestState.loaded);
     when(mockTvDetailNotifier.tv).thenReturn(testTvDetail);
     when(mockTvDetailNotifier.tvRecommendations).thenReturn(<Tv>[]);
     when(
       mockTvDetailNotifier.recommendationState,
-    ).thenReturn(RequestState.Loaded);
+    ).thenReturn(RequestState.loaded);
     when(mockWatchlistNotifier.isAddedToWatchlist).thenReturn(false);
     when(mockWatchlistNotifier.watchlistMessage).thenReturn('Failed');
 
@@ -138,7 +138,7 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockTvDetailNotifier.tvState).thenReturn(RequestState.Loading);
+    when(mockTvDetailNotifier.tvState).thenReturn(RequestState.loading);
 
     // Act
     await tester.pumpWidget(makeTestableWidget(TvDetailPage(id: 1)));
@@ -151,7 +151,7 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockTvDetailNotifier.tvState).thenReturn(RequestState.Error);
+    when(mockTvDetailNotifier.tvState).thenReturn(RequestState.error);
     when(mockTvDetailNotifier.message).thenReturn('Failed to load data');
 
     // Act
