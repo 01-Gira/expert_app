@@ -23,24 +23,37 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  core:
+    path: packages/core
+  movie:
+    path: packages/movie
+  tv:
+    path: packages/tv
+  watchlist:
+    path: packages/watchlist
+  search:
+    path: packages/search
   http: ^1.2.2
   provider: ^6.1.2
   dartz: ^0.10.1
   equatable: ^2.0.5
-  google_fonts: ^6.2.1
   flutter_rating_bar: ^4.0.1
   cached_network_image: ^3.4.1
   get_it: ^7.7.0
+  google_fonts: ^6.2.1
   sqflite: ^2.3.3+1
   path_provider: ^2.1.4
-
+  flutter_bloc: ^8.0.0
+  rxdart: ^0.27.7
+  change_app_package_name: ^1.5.0
+  firebase_core: ^3.13.1
+  firebase_analytics: ^11.5.0
+  firebase_crashlytics: ^4.3.7
 dev_dependencies:
-  mockito: ^5.0.8
-  build_runner: ^2.0.4
   flutter_test:
     sdk: flutter
-
+  mockito: ^5.0.8
+  build_runner: ^2.0.4
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -55,7 +68,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-
+    - ssl_cert/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

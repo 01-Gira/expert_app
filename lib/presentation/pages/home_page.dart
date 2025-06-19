@@ -1,23 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:expert_app/common/constants.dart';
-import 'package:expert_app/domain/entities/movie.dart';
-import 'package:expert_app/domain/entities/tv.dart';
+import 'package:core/common/constants.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:movie/domain/entities/movie.dart';
+import 'package:tv/domain/entities/tv.dart';
 import 'package:expert_app/presentation/pages/about_page.dart';
-import 'package:expert_app/presentation/pages/movie_detail_page.dart';
-import 'package:expert_app/presentation/pages/popular_movies_page.dart';
-import 'package:expert_app/presentation/pages/popular_tvs_page.dart';
-import 'package:expert_app/presentation/pages/search_page.dart';
-import 'package:expert_app/presentation/pages/top_rated_movies_page.dart';
-import 'package:expert_app/presentation/pages/top_rated_tvs_page.dart';
-import 'package:expert_app/presentation/pages/tv_detail_page.dart';
-import 'package:expert_app/presentation/pages/watchlist_page.dart';
-import 'package:expert_app/presentation/provider/movie_list_notifier.dart';
-import 'package:expert_app/common/state_enum.dart';
-import 'package:expert_app/presentation/provider/tv_list_notifier.dart';
+import 'package:movie/presentation/pages/movie_detail_page.dart';
+import 'package:movie/presentation/pages/popular_movies_page.dart';
+import 'package:tv/presentation/pages/popular_tvs_page.dart';
+import 'package:search/presentation/pages/search_page.dart';
+import 'package:movie/presentation/pages/top_rated_movies_page.dart';
+import 'package:tv/presentation/pages/top_rated_tvs_page.dart';
+import 'package:tv/presentation/pages/tv_detail_page.dart';
+import 'package:watchlist/presentation/pages/watchlist_page.dart';
+import 'package:movie/presentation/provider/movie_list_notifier.dart';
+import 'package:core/common/state_enum.dart';
+import 'package:tv/presentation/provider/tv_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -109,6 +111,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 class MovieTabPage extends StatelessWidget {
+  const MovieTabPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -174,6 +178,8 @@ class MovieTabPage extends StatelessWidget {
 
 // Widget untuk konten tab TV Shows
 class TvTabPage extends StatelessWidget {
+  const TvTabPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -258,11 +264,11 @@ Row _buildSubHeading({required String title, required Function() onTap}) {
 class MovieList extends StatelessWidget {
   final List<Movie> movies;
 
-  MovieList(this.movies);
+  const MovieList(this.movies, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -281,7 +287,7 @@ class MovieList extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: '$baseImageUrl${movie.posterPath}',
                   placeholder: (context, url) =>
                       Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) => Icon(Icons.error),
@@ -299,11 +305,11 @@ class MovieList extends StatelessWidget {
 class TvList extends StatelessWidget {
   final List<Tv> tvs;
 
-  TvList(this.tvs);
+  const TvList(this.tvs, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -322,7 +328,7 @@ class TvList extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${tv.posterPath}',
+                  imageUrl: '$baseImageUrl${tv.posterPath}',
                   placeholder: (context, url) =>
                       Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) => Icon(Icons.error),

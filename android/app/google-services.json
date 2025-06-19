@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "322567994314",
+    "firebase_url": "https://rizal-fire-shop-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "rizal-fire-shop",
+    "storage_bucket": "rizal-fire-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322567994314:android:8dd1485ca53e9516daad33",
+        "android_client_info": {
+          "package_name": "com.dicoding.expert_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322567994314-i1vd6p7f1e3239ii561lfq6tjv256ihu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH9nzn4-2i65v9jHXRl69bjinkezgnRHw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322567994314-i1vd6p7f1e3239ii561lfq6tjv256ihu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322567994314:android:b611ee60b2542f4cdaad33",
+        "android_client_info": {
+          "package_name": "com.dicoding.expertapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322567994314-i1vd6p7f1e3239ii561lfq6tjv256ihu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH9nzn4-2i65v9jHXRl69bjinkezgnRHw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322567994314-i1vd6p7f1e3239ii561lfq6tjv256ihu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,36 +1,43 @@
-import 'package:expert_app/common/constants.dart';
-import 'package:expert_app/common/utils.dart';
+import 'package:core/common/constants.dart';
+import 'package:core/common/utils.dart';
+import 'package:expert_app/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:search/presentation/bloc/search/search_bloc.dart';
 import 'package:expert_app/presentation/pages/about_page.dart';
-import 'package:expert_app/presentation/pages/movie_detail_page.dart';
+import 'package:movie/presentation/pages/movie_detail_page.dart';
 import 'package:expert_app/presentation/pages/home_page.dart';
-import 'package:expert_app/presentation/pages/popular_movies_page.dart';
-import 'package:expert_app/presentation/pages/popular_tvs_page.dart';
-import 'package:expert_app/presentation/pages/search_page.dart';
-import 'package:expert_app/presentation/pages/top_rated_movies_page.dart';
-import 'package:expert_app/presentation/pages/top_rated_tvs_page.dart';
-import 'package:expert_app/presentation/pages/tv_detail_page.dart';
-import 'package:expert_app/presentation/pages/watchlist_page.dart';
-import 'package:expert_app/presentation/provider/movie_detail_notifier.dart';
-import 'package:expert_app/presentation/provider/movie_list_notifier.dart';
-import 'package:expert_app/presentation/provider/popular_movies_notifier.dart';
-import 'package:expert_app/presentation/provider/popular_tvs_notifier.dart';
-import 'package:expert_app/presentation/provider/search_notifier.dart';
-import 'package:expert_app/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:expert_app/presentation/provider/top_rated_tvs_notifier.dart';
-import 'package:expert_app/presentation/provider/tv_detail_notifier.dart';
-import 'package:expert_app/presentation/provider/tv_list_notifier.dart';
-import 'package:expert_app/presentation/provider/watchlist_notifier.dart';
+import 'package:movie/presentation/pages/popular_movies_page.dart';
+import 'package:tv/presentation/pages/popular_tvs_page.dart';
+import 'package:search/presentation/pages/search_page.dart';
+import 'package:movie/presentation/pages/top_rated_movies_page.dart';
+import 'package:tv/presentation/pages/top_rated_tvs_page.dart';
+import 'package:tv/presentation/pages/tv_detail_page.dart';
+import 'package:watchlist/presentation/pages/watchlist_page.dart';
+import 'package:movie/presentation/provider/movie_detail_notifier.dart';
+import 'package:movie/presentation/provider/movie_list_notifier.dart';
+import 'package:movie/presentation/provider/popular_movies_notifier.dart';
+import 'package:tv/presentation/provider/popular_tvs_notifier.dart';
+import 'package:movie/presentation/provider/top_rated_movies_notifier.dart';
+import 'package:tv/presentation/provider/top_rated_tvs_notifier.dart';
+import 'package:tv/presentation/provider/tv_detail_notifier.dart';
+import 'package:tv/presentation/provider/tv_list_notifier.dart';
+import 'package:watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:expert_app/injection.dart' as di;
 
-void main() {
-  di.init();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await di.init();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -41,7 +48,7 @@ class MyApp extends StatelessWidget {
           create: (_) => di.locator<MovieDetailNotifier>(),
         ),
         ChangeNotifierProvider(create: (_) => di.locator<TvDetailNotifier>()),
-        ChangeNotifierProvider(create: (_) => di.locator<SearchNotifier>()),
+        BlocProvider(create: (_) => di.locator<SearchBloc>()),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
         ),
