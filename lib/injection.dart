@@ -34,9 +34,7 @@ import 'package:search/presentation/bloc/search/search_bloc.dart';
 import 'package:movie/presentation/provider/movie_detail_notifier.dart';
 import 'package:movie/presentation/provider/movie_list_notifier.dart';
 import 'package:movie/presentation/provider/popular_movies_notifier.dart';
-import 'package:tv/presentation/provider/popular_tvs_notifier.dart';
 import 'package:movie/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:tv/presentation/provider/top_rated_tvs_notifier.dart';
 import 'package:watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
@@ -160,7 +158,4 @@ Future<void> init() async {
 
   // helper
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
-
-  // external
-  // locator.registerLazySingleton(() => http.Client());
 }

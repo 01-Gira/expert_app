@@ -20,7 +20,6 @@ import 'package:watchlist/presentation/pages/watchlist_page.dart';
 import 'package:movie/presentation/provider/movie_detail_notifier.dart';
 import 'package:movie/presentation/provider/movie_list_notifier.dart';
 import 'package:movie/presentation/provider/popular_movies_notifier.dart';
-import 'package:tv/presentation/provider/popular_tvs_notifier.dart';
 import 'package:movie/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:flutter/cupertino.dart';
