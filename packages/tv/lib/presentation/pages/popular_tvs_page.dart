@@ -1,8 +1,7 @@
-import 'package:core/common/state_enum.dart';
-import 'package:tv/presentation/provider/popular_tvs_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv/presentation/bloc/popular_tvs/popular_tvs_bloc.dart';
 import 'package:tv/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class PopularTvsPage extends StatefulWidget {
   static const routeName = '/popular-tv';
@@ -20,10 +19,7 @@ class PopularTvsPageState extends State<PopularTvsPage> {
 
     Future.microtask(() {
       if (mounted) {
-        Provider.of<PopularTvsNotifier>(
-          context,
-          listen: false,
-        ).fetchPopularTvs();
+        context.read<PopularTvsBloc>().add(FetchPopularTvs());
       }
     });
   }
@@ -34,23 +30,25 @@ class PopularTvsPageState extends State<PopularTvsPage> {
       appBar: AppBar(title: Text('Popular Tvs')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<PopularTvsNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.loading) {
+        child: BlocBuilder<PopularTvsBloc, PopularTvsState>(
+          builder: (context, state) {
+            if (state is PopularTvsLoading) {
               return Center(child: CircularProgressIndicator());
-            } else if (data.state == RequestState.loaded) {
+            } else if (state is PopularTvsLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tv = data.tvs[index];
+                  final tv = state.tvs[index];
                   return TvCard(tv);
                 },
-                itemCount: data.tvs.length,
+                itemCount: state.tvs.length,
               );
-            } else {
+            } else if (state is PopularTvsError) {
               return Center(
                 key: Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
               );
+            } else {
+              return Center(child: Text('No popular shows found.'));
             }
           },
         ),

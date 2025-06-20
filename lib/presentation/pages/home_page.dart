@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/common/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/domain/entities/movie.dart';
 import 'package:tv/domain/entities/tv.dart';
 import 'package:expert_app/presentation/pages/about_page.dart';
 import 'package:movie/presentation/pages/movie_detail_page.dart';
 import 'package:movie/presentation/pages/popular_movies_page.dart';
+import 'package:tv/presentation/bloc/tv_list/tv_list_bloc.dart';
 import 'package:tv/presentation/pages/popular_tvs_page.dart';
 import 'package:search/presentation/pages/search_page.dart';
 import 'package:movie/presentation/pages/top_rated_movies_page.dart';
@@ -13,7 +15,6 @@ import 'package:tv/presentation/pages/tv_detail_page.dart';
 import 'package:watchlist/presentation/pages/watchlist_page.dart';
 import 'package:movie/presentation/provider/movie_list_notifier.dart';
 import 'package:core/common/state_enum.dart';
-import 'package:tv/presentation/provider/tv_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,10 +34,9 @@ class HomePageState extends State<HomePage> {
           ..fetchNowPlayingMovies()
           ..fetchPopularMovies()
           ..fetchTopRatedMovies();
-        Provider.of<TvListNotifier>(context, listen: false)
-          ..fetchOnTheAirTvs()
-          ..fetchPopularTvs()
-          ..fetchTopRatedTvs();
+        context.read<TvListBloc>().add(FetchOnTheAirTvs());
+        context.read<TvListBloc>().add(FetchPopularTvs());
+        context.read<TvListBloc>().add(FetchTopRatedTvs());
       }
     });
   }
@@ -189,16 +189,17 @@ class TvTabPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Latest TV Shows', style: kHeading6),
-            Consumer<TvListNotifier>(
-              builder: (context, data, child) {
-                final state = data.onTheAirTvsState;
-                if (state == RequestState.loading) {
+            Text('On The Air', style: kHeading6),
+            BlocBuilder<TvListBloc, TvListState>(
+              builder: (context, state) {
+                if (state.onTheAirState == RequestState.loading) {
                   return Center(child: CircularProgressIndicator());
-                } else if (state == RequestState.loaded) {
-                  return TvList(data.onTheAirTvs);
+                } else if (state.onTheAirState == RequestState.loaded) {
+                  return TvList(state.onTheAirTvs);
+                } else if (state.onTheAirState == RequestState.error) {
+                  return Text(state.message);
                 } else {
-                  return Text('Failed to load on the latest tv shows');
+                  return Text('Failed to load data');
                 }
               },
             ),
@@ -207,15 +208,14 @@ class TvTabPage extends StatelessWidget {
               onTap: () =>
                   Navigator.pushNamed(context, PopularTvsPage.routeName),
             ),
-            Consumer<TvListNotifier>(
-              builder: (context, data, child) {
-                final state = data.popularTvsState;
-                if (state == RequestState.loading) {
+            BlocBuilder<TvListBloc, TvListState>(
+              builder: (context, state) {
+                if (state.popularTvsState == RequestState.loading) {
                   return Center(child: CircularProgressIndicator());
-                } else if (state == RequestState.loaded) {
-                  return TvList(data.popularTvs);
+                } else if (state.popularTvsState == RequestState.loaded) {
+                  return TvList(state.popularTvs);
                 } else {
-                  return Text('Failed to load popular tv shows');
+                  return Text(state.message);
                 }
               },
             ),
@@ -224,15 +224,14 @@ class TvTabPage extends StatelessWidget {
               onTap: () =>
                   Navigator.pushNamed(context, TopRatedTvsPage.routeName),
             ),
-            Consumer<TvListNotifier>(
-              builder: (context, data, child) {
-                final state = data.topRatedTvsState;
-                if (state == RequestState.loading) {
+            BlocBuilder<TvListBloc, TvListState>(
+              builder: (context, state) {
+                if (state.topRatedTvsState == RequestState.loading) {
                   return Center(child: CircularProgressIndicator());
-                } else if (state == RequestState.loaded) {
-                  return TvList(data.topRatedTvs);
+                } else if (state.topRatedTvsState == RequestState.loaded) {
+                  return TvList(state.topRatedTvs);
                 } else {
-                  return Text('Failed to load top rated tv shows');
+                  return Text(state.message);
                 }
               },
             ),

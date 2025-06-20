@@ -17,7 +17,6 @@ void main() {
     searchBloc = SearchBloc(mockSearchMulti);
   });
 
-  // Data dummy untuk hasil pencarian
   final tMediaModel = Media(
     id: 1,
     title: 'Test Movie',

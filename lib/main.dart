@@ -7,6 +7,10 @@ import 'package:expert_app/presentation/pages/about_page.dart';
 import 'package:movie/presentation/pages/movie_detail_page.dart';
 import 'package:expert_app/presentation/pages/home_page.dart';
 import 'package:movie/presentation/pages/popular_movies_page.dart';
+import 'package:tv/presentation/bloc/popular_tvs/popular_tvs_bloc.dart';
+import 'package:tv/presentation/bloc/top_rated_tvs/top_rated_tvs_bloc.dart';
+import 'package:tv/presentation/bloc/tv_detail/tv_detail_bloc.dart';
+import 'package:tv/presentation/bloc/tv_list/tv_list_bloc.dart';
 import 'package:tv/presentation/pages/popular_tvs_page.dart';
 import 'package:search/presentation/pages/search_page.dart';
 import 'package:movie/presentation/pages/top_rated_movies_page.dart';
@@ -18,9 +22,6 @@ import 'package:movie/presentation/provider/movie_list_notifier.dart';
 import 'package:movie/presentation/provider/popular_movies_notifier.dart';
 import 'package:tv/presentation/provider/popular_tvs_notifier.dart';
 import 'package:movie/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:tv/presentation/provider/top_rated_tvs_notifier.dart';
-import 'package:tv/presentation/provider/tv_detail_notifier.dart';
-import 'package:tv/presentation/provider/tv_list_notifier.dart';
 import 'package:watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,22 +44,20 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => di.locator<MovieListNotifier>()),
-        ChangeNotifierProvider(create: (_) => di.locator<TvListNotifier>()),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(create: (_) => di.locator<TvDetailNotifier>()),
-        BlocProvider(create: (_) => di.locator<SearchBloc>()),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
         ),
         ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedTvsNotifier>(),
+          create: (_) => di.locator<MovieDetailNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<PopularMoviesNotifier>(),
         ),
-        ChangeNotifierProvider(create: (_) => di.locator<PopularTvsNotifier>()),
+        BlocProvider(create: (_) => di.locator<TvListBloc>()),
+        BlocProvider(create: (_) => di.locator<TvDetailBloc>()),
+        BlocProvider(create: (_) => di.locator<TopRatedTvsBloc>()),
+        BlocProvider(create: (_) => di.locator<PopularTvsBloc>()),
+        BlocProvider(create: (_) => di.locator<SearchBloc>()),
         ChangeNotifierProvider(create: (_) => di.locator<WatchlistNotifier>()),
       ],
       child: MaterialApp(
@@ -93,7 +92,10 @@ class MyApp extends StatelessWidget {
             case TvDetailPage.routeName:
               final id = settings.arguments as int;
               return MaterialPageRoute(
-                builder: (_) => TvDetailPage(id: id),
+                builder: (_) => BlocProvider(
+                  create: (_) => di.locator<TvDetailBloc>(),
+                  child: TvDetailPage(id: id),
+                ),
                 settings: settings,
               );
             case SearchPage.routeName:

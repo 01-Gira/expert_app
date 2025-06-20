@@ -25,7 +25,8 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   provider: ^6.1.2
   cached_network_image: ^3.4.1
-
+  flutter_bloc: ^8.0.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

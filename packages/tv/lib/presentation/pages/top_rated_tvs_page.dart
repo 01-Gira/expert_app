@@ -1,8 +1,7 @@
-import 'package:core/common/state_enum.dart';
-import 'package:tv/presentation/provider/top_rated_tvs_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv/presentation/bloc/top_rated_tvs/top_rated_tvs_bloc.dart';
 import 'package:tv/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class TopRatedTvsPage extends StatefulWidget {
   static const routeName = '/top-rated-tv';
@@ -19,10 +18,7 @@ class TopRatedTvsPageState extends State<TopRatedTvsPage> {
     super.initState();
     Future.microtask(() {
       if (mounted) {
-        Provider.of<TopRatedTvsNotifier>(
-          context,
-          listen: false,
-        ).fetchTopRatedTvs();
+        context.read<TopRatedTvsBloc>().add(FetchTopRatedTvs());
       }
     });
   }
@@ -33,23 +29,25 @@ class TopRatedTvsPageState extends State<TopRatedTvsPage> {
       appBar: AppBar(title: Text('Top Rated Tvs')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TopRatedTvsNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.loading) {
+        child: BlocBuilder<TopRatedTvsBloc, TopRatedTvsState>(
+          builder: (context, state) {
+            if (state is TopRatedTvsLoading) {
               return Center(child: CircularProgressIndicator());
-            } else if (data.state == RequestState.loaded) {
+            } else if (state is TopRatedTvsLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tv = data.tvs[index];
+                  final tv = state.tvs[index];
                   return TvCard(tv);
                 },
-                itemCount: data.tvs.length,
+                itemCount: state.tvs.length,
               );
-            } else {
+            } else if (state is TopRatedTvsError) {
               return Center(
                 key: Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
               );
+            } else {
+              return Center(child: Text('No top rated shows found.'));
             }
           },
         ),

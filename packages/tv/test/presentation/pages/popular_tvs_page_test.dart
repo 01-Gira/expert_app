@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:tv/presentation/bloc/top_rated_tvs/top_rated_tvs_bloc.dart';
-import 'package:tv/presentation/pages/top_rated_tvs_page.dart';
+import 'package:tv/presentation/bloc/popular_tvs/popular_tvs_bloc.dart';
+import 'package:tv/presentation/pages/popular_tvs_page.dart';
 import 'package:tv/presentation/widgets/tv_card_list.dart';
 
 import '../../dummy_data/dummy_objects.dart';
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late MockTopRatedTvsBloc mockTopRatedTvsBloc;
+  late MockPopularTvsBloc mockPopularTvsBloc;
 
   setUp(() {
-    mockTopRatedTvsBloc = MockTopRatedTvsBloc();
+    mockPopularTvsBloc = MockPopularTvsBloc();
   });
 
   Widget makeTestableWidget(Widget body) {
-    return BlocProvider<TopRatedTvsBloc>.value(
-      value: mockTopRatedTvsBloc,
+    return BlocProvider<PopularTvsBloc>.value(
+      value: mockPopularTvsBloc,
       child: MaterialApp(home: body),
     );
   }
@@ -27,11 +27,11 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockTopRatedTvsBloc.state).thenReturn(TopRatedTvsLoading());
-    when(mockTopRatedTvsBloc.stream).thenAnswer((_) => Stream.empty());
+    when(mockPopularTvsBloc.state).thenReturn(PopularTvsLoading());
+    when(mockPopularTvsBloc.stream).thenAnswer((_) => Stream.empty());
 
     // Act
-    await tester.pumpWidget(makeTestableWidget(const TopRatedTvsPage()));
+    await tester.pumpWidget(makeTestableWidget(const PopularTvsPage()));
 
     // Assert
     final progressBarFinder = find.byType(CircularProgressIndicator);
@@ -45,10 +45,11 @@ void main() {
     WidgetTester tester,
   ) async {
     // Arrange
-    when(mockTopRatedTvsBloc.state).thenReturn(TopRatedTvsLoaded(testTvList));
-    when(mockTopRatedTvsBloc.stream).thenAnswer((_) => Stream.empty());
+    when(mockPopularTvsBloc.state).thenReturn(PopularTvsLoaded(testTvList));
+    when(mockPopularTvsBloc.stream).thenAnswer((_) => Stream.empty());
+
     // Act
-    await tester.pumpWidget(makeTestableWidget(const TopRatedTvsPage()));
+    await tester.pumpWidget(makeTestableWidget(const PopularTvsPage()));
 
     // Assert
     final listViewFinder = find.byType(ListView);
@@ -63,12 +64,12 @@ void main() {
   ) async {
     // Arrange
     when(
-      mockTopRatedTvsBloc.state,
-    ).thenReturn(const TopRatedTvsError('Error message'));
-    when(mockTopRatedTvsBloc.stream).thenAnswer((_) => Stream.empty());
+      mockPopularTvsBloc.state,
+    ).thenReturn(const PopularTvsError('Error message'));
+    when(mockPopularTvsBloc.stream).thenAnswer((_) => Stream.empty());
 
     // Act
-    await tester.pumpWidget(makeTestableWidget(const TopRatedTvsPage()));
+    await tester.pumpWidget(makeTestableWidget(const PopularTvsPage()));
 
     // Assert
     final textFinder = find.byKey(const Key('error_message'));

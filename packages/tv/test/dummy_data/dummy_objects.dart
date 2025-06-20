@@ -22,7 +22,7 @@ final testTv = Tv(
 
 final testTvList = <Tv>[testTv];
 
-final testTvDetail = TvDetail(
+const testTvDetail = TvDetail(
   adult: false,
   lastAirDate: '2022-01-01',
   backdropPath: 'backdropPath',
