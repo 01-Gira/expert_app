@@ -10,8 +10,6 @@ import 'package:tv/presentation/bloc/popular_tvs/popular_tvs_bloc.dart';
 import 'package:tv/presentation/bloc/top_rated_tvs/top_rated_tvs_bloc.dart';
 import 'package:tv/presentation/bloc/tv_detail/tv_detail_bloc.dart';
 import 'package:tv/presentation/bloc/tv_list/tv_list_bloc.dart';
-import 'package:tv/presentation/provider/popular_tvs_notifier.dart';
-import 'package:tv/presentation/provider/top_rated_tvs_notifier.dart';
 import 'package:watchlist/domain/repositories/watchlist_repository.dart'; // Jika belum ada
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
@@ -24,8 +22,6 @@ import 'package:watchlist/domain/usecases/save_watchlist.dart';
     TvRepository,
     TvRemoteDataSource,
     GetPopularTvs,
-    PopularTvsNotifier,
-    TopRatedTvsNotifier,
     GetTopRatedTvs,
     GetOnTheAirTvs,
     GetTvDetail,

@@ -1077,6 +1077,11 @@ DA:23,2
 LF:8
 LH:8
 end_of_record
+SF:./packages/search/lib\search.dart
+DA:4,2
+LF:1
+LH:1
+end_of_record
 SF:./packages/search/lib\presentation\pages\search_page.dart
 DA:10,1
 DA:12,1
@@ -1148,11 +1153,6 @@ DA:70,4
 DA:71,0
 LF:31
 LH:30
-end_of_record
-SF:./packages/search/lib\search.dart
-DA:4,2
-LF:1
-LH:1
 end_of_record
 SF:./packages/tv/lib\data\datasources\tv_remote_data_source.dart
 DA:21,1
