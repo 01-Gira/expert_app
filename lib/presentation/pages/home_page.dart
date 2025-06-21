@@ -285,12 +285,23 @@ class MovieList extends StatelessWidget {
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
-                child: CachedNetworkImage(
-                  imageUrl: '$baseImageUrl${movie.posterPath}',
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
+                child:
+                    (movie.posterPath != null && movie.posterPath!.isNotEmpty)
+                    ? CachedNetworkImage(
+                        imageUrl: '$baseImageUrl${movie.posterPath}',
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      )
+                    : Container(
+                        color: Colors.grey[800],
+                        child: Center(
+                          child: Icon(
+                            Icons.image_not_supported,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ),
               ),
             ),
           );
@@ -326,12 +337,22 @@ class TvList extends StatelessWidget {
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
-                child: CachedNetworkImage(
-                  imageUrl: '$baseImageUrl${tv.posterPath}',
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
+                child: (tv.posterPath != null)
+                    ? CachedNetworkImage(
+                        imageUrl: '$baseImageUrl${tv.posterPath}',
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      )
+                    : Container(
+                        color: Colors.grey[800],
+                        child: Center(
+                          child: Icon(
+                            Icons.image_not_supported,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ),
               ),
             ),
           );

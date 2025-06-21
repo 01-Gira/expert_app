@@ -35,7 +35,7 @@ class TvDetailResponse extends Equatable {
   final String originalName;
   final String overview;
   final double popularity;
-  final String posterPath;
+  final String? posterPath;
   final String firstAirDate;
   final String lastAirDate;
   final String status;
@@ -103,7 +103,7 @@ class TvDetailResponse extends Equatable {
       name: name,
       originalName: originalName,
       overview: overview,
-      posterPath: posterPath,
+      posterPath: posterPath ?? '',
       firstAirDate: firstAirDate,
       lastAirDate: lastAirDate,
       voteAverage: voteAverage,

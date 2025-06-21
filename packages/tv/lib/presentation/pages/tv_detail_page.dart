@@ -80,13 +80,23 @@ class DetailContent extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
-        CachedNetworkImage(
-          imageUrl: 'https://image.tmdb.org/t/p/w500${tv.posterPath}',
-          width: screenWidth,
-          placeholder: (context, url) =>
-              Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-        ),
+        (tv.posterPath.isNotEmpty)
+            ? CachedNetworkImage(
+                imageUrl: '$baseImageUrl${tv.posterPath}',
+                width: screenWidth,
+                placeholder: (context, url) =>
+                    Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              )
+            : Container(
+                color: Colors.grey[800],
+                child: Center(
+                  child: Icon(
+                    Icons.image_not_supported,
+                    color: Colors.grey[400],
+                  ),
+                ),
+              ),
         Container(
           margin: const EdgeInsets.only(top: 48 + 8),
           child: DraggableScrollableSheet(
@@ -163,30 +173,37 @@ class DetailContent extends StatelessWidget {
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(8),
                                               ),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://image.tmdb.org/t/p/w500${season.posterPath}',
-                                                width: 80,
-                                                placeholder: (context, url) =>
-                                                    Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    ),
-                                                errorWidget:
-                                                    (
-                                                      context,
-                                                      url,
-                                                      error,
-                                                    ) => Container(
-                                                      width: 80,
-                                                      height: 120,
+                                              child: (tv.posterPath.isNotEmpty)
+                                                  ? CachedNetworkImage(
+                                                      imageUrl:
+                                                          '$baseImageUrl${tv.posterPath}',
+                                                      placeholder:
+                                                          (
+                                                            context,
+                                                            url,
+                                                          ) => Center(
+                                                            child:
+                                                                CircularProgressIndicator(),
+                                                          ),
+                                                      errorWidget:
+                                                          (
+                                                            context,
+                                                            url,
+                                                            error,
+                                                          ) =>
+                                                              Icon(Icons.error),
+                                                    )
+                                                  : Container(
                                                       color: Colors.grey[800],
-                                                      child: Icon(
-                                                        Icons
-                                                            .image_not_supported,
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons
+                                                              .image_not_supported,
+                                                          color:
+                                                              Colors.grey[400],
+                                                        ),
                                                       ),
                                                     ),
-                                              ),
                                             ),
                                             title: Text(
                                               season.name ?? 'No Name',
@@ -248,18 +265,39 @@ class DetailContent extends StatelessWidget {
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(8),
                                               ),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://image.tmdb.org/t/p/w500${tv.posterPath}',
-                                                placeholder: (context, url) =>
-                                                    Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
+                                              child:
+                                                  (tv.posterPath != null &&
+                                                      tv.posterPath!.isNotEmpty)
+                                                  ? CachedNetworkImage(
+                                                      imageUrl:
+                                                          '$baseImageUrl${tv.posterPath}',
+                                                      placeholder:
+                                                          (
+                                                            context,
+                                                            url,
+                                                          ) => Center(
+                                                            child:
+                                                                CircularProgressIndicator(),
+                                                          ),
+                                                      errorWidget:
+                                                          (
+                                                            context,
+                                                            url,
+                                                            error,
+                                                          ) =>
+                                                              Icon(Icons.error),
+                                                    )
+                                                  : Container(
+                                                      color: Colors.grey[800],
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons
+                                                              .image_not_supported,
+                                                          color:
+                                                              Colors.grey[400],
+                                                        ),
+                                                      ),
                                                     ),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Icon(Icons.error),
-                                              ),
                                             ),
                                           ),
                                         );

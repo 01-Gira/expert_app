@@ -85,13 +85,24 @@ class DetailContent extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
-        CachedNetworkImage(
-          imageUrl: 'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-          width: screenWidth,
-          placeholder: (context, url) =>
-              Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-        ),
+        (movie.posterPath != '')
+            ? CachedNetworkImage(
+                imageUrl: '$baseImageUrl${movie.posterPath}',
+                width: screenWidth,
+
+                placeholder: (context, url) =>
+                    Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              )
+            : Container(
+                color: Colors.grey[800],
+                child: Center(
+                  child: Icon(
+                    Icons.image_not_supported,
+                    color: Colors.grey[400],
+                  ),
+                ),
+              ),
         Container(
           margin: const EdgeInsets.only(top: 48 + 8),
           child: DraggableScrollableSheet(
@@ -222,18 +233,41 @@ class DetailContent extends StatelessWidget {
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(8),
                                               ),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                                                placeholder: (context, url) =>
-                                                    Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
+                                              child:
+                                                  (movie.posterPath != null &&
+                                                      movie
+                                                          .posterPath!
+                                                          .isNotEmpty)
+                                                  ? CachedNetworkImage(
+                                                      imageUrl:
+                                                          '$baseImageUrl${movie.posterPath}',
+                                                      placeholder:
+                                                          (
+                                                            context,
+                                                            url,
+                                                          ) => Center(
+                                                            child:
+                                                                CircularProgressIndicator(),
+                                                          ),
+                                                      errorWidget:
+                                                          (
+                                                            context,
+                                                            url,
+                                                            error,
+                                                          ) =>
+                                                              Icon(Icons.error),
+                                                    )
+                                                  : Container(
+                                                      color: Colors.grey[800],
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons
+                                                              .image_not_supported,
+                                                          color:
+                                                              Colors.grey[400],
+                                                        ),
+                                                      ),
                                                     ),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Icon(Icons.error),
-                                              ),
                                             ),
                                           ),
                                         );
