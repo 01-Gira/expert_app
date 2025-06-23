@@ -111,207 +111,212 @@ class DetailContent extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 16),
-                      child: SingleChildScrollView(
+                      child: CustomScrollView(
                         controller: scrollController,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(tv.name, style: kHeading5),
-                            FilledButton(
-                              onPressed: () {
-                                if (!isAddedWatchlist) {
-                                  context.read<TvDetailBloc>().add(
-                                    AddToWatchlist(tv),
-                                  );
-                                } else {
-                                  context.read<TvDetailBloc>().add(
-                                    RemoveFromWatchlist(tv),
-                                  );
-                                }
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  isAddedWatchlist
-                                      ? Icon(Icons.check)
-                                      : Icon(Icons.add),
-                                  Text('Watchlist'),
-                                ],
-                              ),
-                            ),
-                            Text(_showGenres(tv.genres)),
-                            Row(
-                              children: [
-                                RatingBarIndicator(
-                                  rating: tv.voteAverage / 2,
-                                  itemCount: 5,
-                                  itemBuilder: (context, index) =>
-                                      Icon(Icons.star, color: kMikadoYellow),
-                                  itemSize: 24,
-                                ),
-                                Text('${tv.voteAverage}'),
-                              ],
-                            ),
-                            SizedBox(height: 16),
-                            Text('Overview', style: kHeading6),
-                            Text(tv.overview),
-                            SizedBox(height: 16),
-                            Text('Seasons', style: kHeading6),
-                            tv.seasons != null && tv.seasons!.isNotEmpty
-                                ? SizedBox(
-                                    height: 300,
-                                    child: ListView.builder(
-                                      itemCount: tv.seasons!.length,
-                                      itemBuilder: (context, index) {
-                                        final season = tv.seasons![index];
-                                        return Card(
-                                          margin: const EdgeInsets.symmetric(
-                                            vertical: 8.0,
-                                          ),
-                                          child: ExpansionTile(
-                                            leading: ClipRRect(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(8),
-                                              ),
-                                              child: (tv.posterPath.isNotEmpty)
-                                                  ? CachedNetworkImage(
-                                                      imageUrl:
-                                                          '$baseImageUrl${tv.posterPath}',
-                                                      placeholder:
-                                                          (
-                                                            context,
-                                                            url,
-                                                          ) => Center(
-                                                            child:
-                                                                CircularProgressIndicator(),
-                                                          ),
-                                                      errorWidget:
-                                                          (
-                                                            context,
-                                                            url,
-                                                            error,
-                                                          ) =>
-                                                              Icon(Icons.error),
-                                                    )
-                                                  : Container(
-                                                      color: Colors.grey[800],
-                                                      child: Center(
-                                                        child: Icon(
-                                                          Icons
-                                                              .image_not_supported,
-                                                          color:
-                                                              Colors.grey[400],
-                                                        ),
-                                                      ),
-                                                    ),
-                                            ),
-                                            title: Text(
-                                              season.name ?? 'No Name',
-                                              style: kSubtitle,
-                                            ),
-                                            subtitle: Text(
-                                              'Episodes: ${season.episodeCount}',
-                                            ),
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  16.0,
-                                                ).copyWith(top: 0),
-                                                child: Text(
-                                                  (season.overview != null &&
-                                                          season
-                                                              .overview!
-                                                              .isNotEmpty)
-                                                      ? season.overview!
-                                                      : 'No overview available for this season.',
-                                                  style: kBodyText,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  )
-                                : Text('No seasons available'),
-                            SizedBox(height: 16),
-                            Text('Recommendations', style: kHeading6),
-                            BlocBuilder<TvDetailBloc, TvDetailState>(
-                              builder: (context, state) {
-                                if (state.recommendationState ==
-                                    RequestState.loading) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else if (state.recommendationState ==
-                                    RequestState.loaded) {
-                                  return SizedBox(
-                                    height: 150,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        final tv = recommendations[index];
-                                        return Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.pushReplacementNamed(
-                                                context,
-                                                TvDetailPage.routeName,
-                                                arguments: tv.id,
-                                              );
-                                            },
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(8),
-                                              ),
-                                              child:
-                                                  (tv.posterPath != null &&
-                                                      tv.posterPath!.isNotEmpty)
-                                                  ? CachedNetworkImage(
-                                                      imageUrl:
-                                                          '$baseImageUrl${tv.posterPath}',
-                                                      placeholder:
-                                                          (
-                                                            context,
-                                                            url,
-                                                          ) => Center(
-                                                            child:
-                                                                CircularProgressIndicator(),
-                                                          ),
-                                                      errorWidget:
-                                                          (
-                                                            context,
-                                                            url,
-                                                            error,
-                                                          ) =>
-                                                              Icon(Icons.error),
-                                                    )
-                                                  : Container(
-                                                      color: Colors.grey[800],
-                                                      child: Center(
-                                                        child: Icon(
-                                                          Icons
-                                                              .image_not_supported,
-                                                          color:
-                                                              Colors.grey[400],
-                                                        ),
-                                                      ),
-                                                    ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      itemCount: recommendations.length,
-                                    ),
-                                  );
-                                } else {
-                                  return Container();
-                                }
-                              },
-                            ),
-                          ],
-                        ),
+                        slivers: [
+                          _buildContentSliver(context),
+                          _buildSeasonsSliver(), // Bagian Seasons sekarang menjadi Sliver
+                          _buildRecommendationsSliver(), // Bagian Rekomendasi juga menjadi Sliver
+                        ],
+                        //     child: Column(
+                        //       crossAxisAlignment: CrossAxisAlignment.start,
+                        //       children: [
+                        //         Text(tv.name, style: kHeading5),
+                        //         FilledButton(
+                        //           onPressed: () {
+                        //             if (!isAddedWatchlist) {
+                        //               context.read<TvDetailBloc>().add(
+                        //                 AddToWatchlist(tv),
+                        //               );
+                        //             } else {
+                        //               context.read<TvDetailBloc>().add(
+                        //                 RemoveFromWatchlist(tv),
+                        //               );
+                        //             }
+                        //           },
+                        //           child: Row(
+                        //             mainAxisSize: MainAxisSize.min,
+                        //             children: [
+                        //               isAddedWatchlist
+                        //                   ? Icon(Icons.check)
+                        //                   : Icon(Icons.add),
+                        //               Text('Watchlist'),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //         Text(_showGenres(tv.genres)),
+                        //         Row(
+                        //           children: [
+                        //             RatingBarIndicator(
+                        //               rating: tv.voteAverage / 2,
+                        //               itemCount: 5,
+                        //               itemBuilder: (context, index) =>
+                        //                   Icon(Icons.star, color: kMikadoYellow),
+                        //               itemSize: 24,
+                        //             ),
+                        //             Text('${tv.voteAverage}'),
+                        //           ],
+                        //         ),
+                        //         SizedBox(height: 16),
+                        //         Text('Overview', style: kHeading6),
+                        //         Text(tv.overview),
+                        //         SizedBox(height: 16),
+                        //         Text('Seasons', style: kHeading6),
+                        //         tv.seasons != null && tv.seasons!.isNotEmpty
+                        //             ? SizedBox(
+                        //                 height: 300,
+                        //                 child: ListView.builder(
+                        //                   itemCount: tv.seasons!.length,
+                        //                   itemBuilder: (context, index) {
+                        //                     final season = tv.seasons![index];
+                        //                     return Card(
+                        //                       margin: const EdgeInsets.symmetric(
+                        //                         vertical: 8.0,
+                        //                       ),
+                        //                       child: ExpansionTile(
+                        //                         leading: ClipRRect(
+                        //                           borderRadius: BorderRadius.all(
+                        //                             Radius.circular(8),
+                        //                           ),
+                        //                           child: (tv.posterPath.isNotEmpty)
+                        //                               ? CachedNetworkImage(
+                        //                                   imageUrl:
+                        //                                       '$baseImageUrl${tv.posterPath}',
+                        //                                   placeholder:
+                        //                                       (
+                        //                                         context,
+                        //                                         url,
+                        //                                       ) => Center(
+                        //                                         child:
+                        //                                             CircularProgressIndicator(),
+                        //                                       ),
+                        //                                   errorWidget:
+                        //                                       (
+                        //                                         context,
+                        //                                         url,
+                        //                                         error,
+                        //                                       ) =>
+                        //                                           Icon(Icons.error),
+                        //                                 )
+                        //                               : Container(
+                        //                                   color: Colors.grey[800],
+                        //                                   child: Center(
+                        //                                     child: Icon(
+                        //                                       Icons
+                        //                                           .image_not_supported,
+                        //                                       color:
+                        //                                           Colors.grey[400],
+                        //                                     ),
+                        //                                   ),
+                        //                                 ),
+                        //                         ),
+                        //                         title: Text(
+                        //                           season.name ?? 'No Name',
+                        //                           style: kSubtitle,
+                        //                         ),
+                        //                         subtitle: Text(
+                        //                           'Episodes: ${season.episodeCount}',
+                        //                         ),
+                        //                         children: [
+                        //                           Padding(
+                        //                             padding: const EdgeInsets.all(
+                        //                               16.0,
+                        //                             ).copyWith(top: 0),
+                        //                             child: Text(
+                        //                               (season.overview != null &&
+                        //                                       season
+                        //                                           .overview!
+                        //                                           .isNotEmpty)
+                        //                                   ? season.overview!
+                        //                                   : 'No overview available for this season.',
+                        //                               style: kBodyText,
+                        //                             ),
+                        //                           ),
+                        //                         ],
+                        //                       ),
+                        //                     );
+                        //                   },
+                        //                 ),
+                        //               )
+                        //             : Text('No seasons available'),
+                        //         SizedBox(height: 16),
+                        //         Text('Recommendations', style: kHeading6),
+                        //         BlocBuilder<TvDetailBloc, TvDetailState>(
+                        //           builder: (context, state) {
+                        //             if (state.recommendationState ==
+                        //                 RequestState.loading) {
+                        //               return Center(
+                        //                 child: CircularProgressIndicator(),
+                        //               );
+                        //             } else if (state.recommendationState ==
+                        //                 RequestState.loaded) {
+                        //               return SizedBox(
+                        //                 height: 150,
+                        //                 child: ListView.builder(
+                        //                   scrollDirection: Axis.horizontal,
+                        //                   itemBuilder: (context, index) {
+                        //                     final tv = recommendations[index];
+                        //                     return Padding(
+                        //                       padding: const EdgeInsets.all(4.0),
+                        //                       child: InkWell(
+                        //                         onTap: () {
+                        //                           Navigator.pushReplacementNamed(
+                        //                             context,
+                        //                             TvDetailPage.routeName,
+                        //                             arguments: tv.id,
+                        //                           );
+                        //                         },
+                        //                         child: ClipRRect(
+                        //                           borderRadius: BorderRadius.all(
+                        //                             Radius.circular(8),
+                        //                           ),
+                        //                           child:
+                        //                               (tv.posterPath != null &&
+                        //                                   tv.posterPath!.isNotEmpty)
+                        //                               ? CachedNetworkImage(
+                        //                                   imageUrl:
+                        //                                       '$baseImageUrl${tv.posterPath}',
+                        //                                   placeholder:
+                        //                                       (
+                        //                                         context,
+                        //                                         url,
+                        //                                       ) => Center(
+                        //                                         child:
+                        //                                             CircularProgressIndicator(),
+                        //                                       ),
+                        //                                   errorWidget:
+                        //                                       (
+                        //                                         context,
+                        //                                         url,
+                        //                                         error,
+                        //                                       ) =>
+                        //                                           Icon(Icons.error),
+                        //                                 )
+                        //                               : Container(
+                        //                                   color: Colors.grey[800],
+                        //                                   child: Center(
+                        //                                     child: Icon(
+                        //                                       Icons
+                        //                                           .image_not_supported,
+                        //                                       color:
+                        //                                           Colors.grey[400],
+                        //                                     ),
+                        //                                   ),
+                        //                                 ),
+                        //                         ),
+                        //                       ),
+                        //                     );
+                        //                   },
+                        //                   itemCount: recommendations.length,
+                        //                 ),
+                        //               );
+                        //             } else {
+                        //               return Container();
+                        //             }
+                        //           },
+                        //         ),
+                        //       ],
+                        //     ),
                       ),
                     ),
                     Align(
@@ -345,6 +350,166 @@ class DetailContent extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  SliverToBoxAdapter _buildContentSliver(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(tv.name, style: kHeading5),
+          FilledButton(
+            onPressed: () {
+              if (!isAddedWatchlist) {
+                context.read<TvDetailBloc>().add(AddToWatchlist(tv));
+              } else {
+                context.read<TvDetailBloc>().add(RemoveFromWatchlist(tv));
+              }
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                isAddedWatchlist
+                    ? const Icon(Icons.check)
+                    : const Icon(Icons.add),
+                const Text('Watchlist'),
+              ],
+            ),
+          ),
+          Text(_showGenres(tv.genres)),
+          Row(
+            children: [
+              RatingBarIndicator(
+                rating: tv.voteAverage / 2,
+                itemCount: 5,
+                itemBuilder: (context, index) =>
+                    const Icon(Icons.star, color: kMikadoYellow),
+                itemSize: 24,
+              ),
+              Text('${tv.voteAverage}'),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text('Overview', style: kHeading6),
+          Text(tv.overview),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSeasonsSliver() {
+    return SliverToBoxAdapter(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Seasons', style: kHeading6),
+          const SizedBox(height: 8),
+          if (tv.seasons != null)
+            ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: tv.seasons?.length,
+              itemBuilder: (context, index) {
+                final season = tv.seasons?[index];
+                final overview = season?.overview;
+                return Card(
+                  child: ExpansionTile(
+                    leading: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      child: CachedNetworkImage(
+                        imageUrl: '$baseImageUrl${season?.posterPath}',
+                        width: 80,
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Container(
+                          width: 80,
+                          height: 120,
+                          color: Colors.grey[800],
+                          child: const Icon(Icons.image_not_supported),
+                        ),
+                      ),
+                    ),
+                    title: Text(season?.name ?? 'No Name', style: kSubtitle),
+                    subtitle: Text('Episodes: ${season?.episodeCount}'),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0).copyWith(top: 0),
+                        child: Text(
+                          (overview != null && overview.isNotEmpty)
+                              ? overview
+                              : 'No overview available for this season.',
+                          style: kBodyText,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            )
+          else
+            const Text('No season information available.'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecommendationsSliver() {
+    return SliverToBoxAdapter(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          Text('Recommendations', style: kHeading6),
+          BlocBuilder<TvDetailBloc, TvDetailState>(
+            builder: (context, state) {
+              if (state.recommendationState == RequestState.loading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state.recommendationState == RequestState.loaded) {
+                return SizedBox(
+                  height: 150,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final tv = recommendations[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              TvDetailPage.routeName,
+                              arguments: tv.id,
+                            );
+                          },
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: '$baseImageUrl${tv.posterPath}',
+                              placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    itemCount: recommendations.length,
+                  ),
+                );
+              } else {
+                return Container();
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 
